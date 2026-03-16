@@ -4,50 +4,60 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Japan Trip — Sam & Jess — April–May 2026</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   DESIGN SYSTEM — Mediterranean Editorial
+   DESIGN SYSTEM — Mediterranean Editorial · Dynamic
    Cormorant Garamond (display) · DM Sans (body)
-   Warm parchment · Muted teal · Deep navy · Terracotta
+   Rich parchment · Bold teal · Deep navy · Vivid terracotta
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 :root {
   /* Page backgrounds */
-  --bg:            #F2EDE0;
-  --surface:       #FBF8F2;
-  --data-bg:       #EAE2D2;
-  --tag-bg:        #E4DCD0;
+  --bg:            #EDE5D3;
+  --surface:       #F9F4E8;
+  --data-bg:       #E5D9C5;
+  --tag-bg:        #DDD4C0;
 
   /* Text */
-  --text:          #2C2820;
-  --text-muted:    #6B6354;
-  --text-light:    #A09078;
+  --text:          #1E1A14;
+  --text-muted:    #5E5446;
+  --text-light:    #9A8E7A;
 
   /* Structure */
-  --border:        #D5CCBA;
-  --divider:       #E2D9C8;
+  --border:        #CABFAA;
+  --divider:       #D8CEBC;
 
-  /* ── Mode: Cycling / Bike — muted Mediterranean teal ── */
-  --accent-bike:        #3A7A8A;
-  --accent-bike-bg:     #E4F0F3;
-  --accent-bike-border: #9ABFC8;
+  /* ── Mode: Cycling / Bike — bold teal ── */
+  --accent-bike:        #2C7D8E;
+  --accent-bike-bg:     #D5EEF2;
+  --accent-bike-border: #87C5D0;
 
-  /* ── Mode: Train — deep harbour navy ── */
-  --accent-train:        #2A3F5C;
-  --accent-train-bg:     #E2E8F1;
-  --accent-train-border: #8AA5C5;
+  /* ── Mode: Train — deep navy ── */
+  --accent-train:        #1C3252;
+  --accent-train-bg:     #D2E3EE;
+  --accent-train-border: #8AAABF;
 
-  /* ── Mode: Flight — warm terracotta clay ── */
-  --accent-flight:        #B85A35;
-  --accent-flight-bg:     #F4EAE4;
-  --accent-flight-border: #D09A80;
+  /* ── Mode: Flight — vivid terracotta ── */
+  --accent-flight:        #C24428;
+  --accent-flight-bg:     #F5DED6;
+  --accent-flight-border: #D8907A;
 
   /* Golden accent — stay badges, highlights */
-  --gold:           #B08828;
-  --gold-bg:        #F3EAD4;
-  --gold-border:    #CDB06A;
+  --gold:           #C08820;
+  --gold-bg:        #F5E8BC;
+  --gold-border:    #D8B84E;
+
+  /* Semantic tones */
+  --teal:         #2C7D8E;
+  --teal-dark:    #1B5470;
+  --teal-bg:      #D5EEF2;
+  --navy:         #1C3252;
+  --navy-bg:      #D2E3EE;
+  --terra:        #C24428;
+  --terra-dark:   #8A2E18;
+  --terra-bg:     #F5DED6;
 
   /* Aliases — used by inline HTML styles and existing selectors */
   --card-bg:     var(--surface);
@@ -74,11 +84,11 @@ body {
 /* ── PAGE HEADER ──────────────────────────────────────── */
 h1 {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 36px;
+  font-size: 52px;
   font-weight: 400;
-  letter-spacing: -0.4px;
-  line-height: 1.1;
-  margin-bottom: 6px;
+  letter-spacing: -1px;
+  line-height: 1.0;
+  margin-bottom: 8px;
   color: var(--text);
 }
 .subtitle {
@@ -113,10 +123,11 @@ h1 {
 .stay {
   background: var(--surface);
   border: 1px solid var(--border);
+  border-left: 4px solid var(--gold);
   border-radius: 14px;
   padding: 26px 30px;
   position: relative;
-  box-shadow: 0 2px 10px rgba(44, 32, 16, 0.06);
+  box-shadow: 0 4px 18px rgba(44, 32, 16, 0.10);
 }
 .stay-header {
   display: flex;
@@ -134,10 +145,10 @@ h1 {
 }
 .stay-name {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 26px;
+  font-size: 42px;
   font-weight: 400;
-  letter-spacing: -0.3px;
-  line-height: 1.1;
+  letter-spacing: -0.8px;
+  line-height: 1.0;
   color: var(--text);
 }
 .stay-dates {
@@ -217,22 +228,24 @@ h1 {
   font-size: 12px;
   padding: 4px 11px;
   border-radius: 20px;
-  background: var(--tag-bg);
-  color: var(--tag-stay);
+  background: var(--teal-bg);
+  color: var(--teal-dark);
   font-weight: 500;
-  border: 1px solid var(--border);
+  border: 1px solid var(--accent-bike-border);
 }
 
 /* ── TRIVIA ───────────────────────────────────────────── */
 .trivia {
-  margin-top: 14px;
+  margin-top: 16px;
   font-family: 'Cormorant Garamond', serif;
-  font-size: 15px;
+  font-size: 16px;
   font-style: italic;
-  color: var(--text-muted);
-  line-height: 1.6;
-  padding-left: 14px;
-  border-left: 2px solid var(--border);
+  color: #6B4E10;
+  line-height: 1.65;
+  padding: 12px 16px;
+  background: var(--gold-bg);
+  border-left: 4px solid var(--gold-border);
+  border-radius: 0 8px 8px 0;
 }
 
 /* ── LINKS ────────────────────────────────────────────── */
@@ -250,7 +263,7 @@ h1 {
 /* ── RELOCATION CONNECTORS ────────────────────────────── */
 .relocation {
   margin: 0;
-  padding: 16px 0 16px 36px;
+  padding: 16px 0 16px 46px;
   position: relative;
   display: flex;
   align-items: flex-start;
@@ -259,19 +272,19 @@ h1 {
 .relocation::before {
   content: '';
   position: absolute;
-  left: 18px; top: 0; bottom: 0;
+  left: 23px; top: 0; bottom: 0;
   width: 2px;
   background: var(--divider);
 }
 .relocation-icon {
-  width: 36px; height: 36px;
+  width: 46px; height: 46px;
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
-  font-size: 16px;
+  font-size: 22px;
   flex-shrink: 0;
   position: relative;
   z-index: 1;
-  margin-left: -36px;
+  margin-left: -46px;
   border: 2px solid;
 }
 .relocation-icon.bike   { background: var(--accent-bike-bg);   border-color: var(--accent-bike-border);   color: var(--accent-bike); }
@@ -301,9 +314,9 @@ h1 {
   font-weight: 500;
   white-space: nowrap;
 }
-.detail-chip.bike   { background: var(--accent-bike-bg);   color: var(--accent-bike); }
-.detail-chip.train  { background: var(--accent-train-bg);  color: var(--accent-train); }
-.detail-chip.flight { background: var(--accent-flight-bg); color: var(--accent-flight); }
+.detail-chip.bike   { background: var(--accent-bike);   color: #fff; }
+.detail-chip.train  { background: var(--accent-train);  color: #fff; }
+.detail-chip.flight { background: var(--accent-flight); color: #fff; }
 .relocation-steps {
   margin-top: 10px;
   font-size: 13px;
@@ -331,25 +344,27 @@ h1 {
 }
 .stat-box {
   text-align: center;
-  padding: 20px 16px;
+  padding: 24px 16px 20px;
   border-radius: 12px;
   border: 1px solid var(--border);
-  background: var(--surface);
-  box-shadow: 0 2px 8px rgba(44, 32, 16, 0.05);
+  border-top: 4px solid var(--gold);
+  background: var(--gold-bg);
+  box-shadow: 0 3px 12px rgba(44, 32, 16, 0.08);
 }
 .stat-number {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 32px;
-  font-weight: 400;
+  font-size: 54px;
+  font-weight: 500;
   line-height: 1;
-  letter-spacing: -0.5px;
+  letter-spacing: -1px;
 }
 .stat-label {
   font-size: 11px;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.6px;
   color: var(--text-muted);
-  margin-top: 4px;
+  margin-top: 6px;
+  font-weight: 500;
 }
 
 /* ── SUMMARY TABLE ────────────────────────────────────── */
@@ -363,11 +378,13 @@ h1 {
 }
 .summary-title {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 22px;
+  font-size: 26px;
   font-weight: 400;
-  padding: 22px 26px 14px;
+  padding: 22px 26px 18px;
   border-bottom: 1px solid var(--divider);
-  color: var(--text);
+  background: var(--navy);
+  color: var(--surface);
+  letter-spacing: -0.3px;
 }
 .summary-table { width: 100%; border-collapse: collapse; font-size: 13px; }
 .summary-table th {
@@ -394,15 +411,17 @@ h1 {
   padding: 2px 9px;
   border-radius: 20px;
 }
-.mode-badge.bike   { background: var(--accent-bike-bg);   color: var(--accent-bike); }
-.mode-badge.train  { background: var(--accent-train-bg);  color: var(--accent-train); }
-.mode-badge.flight { background: var(--accent-flight-bg); color: var(--accent-flight); }
+.mode-badge.bike   { background: var(--accent-bike);   color: #fff; }
+.mode-badge.train  { background: var(--accent-train);  color: #fff; }
+.mode-badge.flight { background: var(--accent-flight); color: #fff; }
 
 /* ── RESPONSIVE ───────────────────────────────────────── */
 @media (max-width: 600px) {
   body { padding: 28px 18px 64px; }
+  h1 { font-size: 38px; }
   .stay { padding: 20px 22px; }
-  .stay-name { font-size: 22px; }
+  .stay-name { font-size: 30px; }
+  .stat-number { font-size: 40px; }
   .stay-header { flex-direction: column; gap: 4px; }
   .stay-dates { text-align: left; }
   .stats { grid-template-columns: 1fr; }
@@ -537,12 +556,43 @@ h1 {
   margin-top: 6px; padding: 3px 9px;
   border-radius: 20px; display: inline-block;
 }
-.stop-tip .tip-mode.bike  { background: var(--accent-bike-bg);   color: var(--accent-bike); }
-.stop-tip .tip-mode.train { background: var(--accent-train-bg);  color: var(--accent-train); }
-.stop-tip .tip-mode.start { background: var(--gold-bg);          color: var(--gold); }
+.stop-tip .tip-mode.bike  { background: var(--accent-bike);  color: #fff; }
+.stop-tip .tip-mode.train { background: var(--accent-train); color: #fff; }
+.stop-tip .tip-mode.start { background: var(--gold);         color: #fff; }
 
 @media (max-width: 600px) {
   .map-section { height: 320px; }
+}
+
+/* ── COLLAPSIBLE STAY CARDS ──────────────────────────── */
+.stay-header {
+  cursor: pointer;
+  user-select: none;
+}
+.stay::before {
+  content: '›';
+  position: absolute;
+  left: 10px;
+  top: 24px;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--gold);
+  transform: rotate(90deg);
+  transition: transform 0.25s ease;
+  line-height: 1;
+}
+.stay.collapsed::before {
+  transform: rotate(0deg);
+}
+.stay-body {
+  overflow: hidden;
+  max-height: 800px;
+  opacity: 1;
+  transition: max-height 0.4s ease, opacity 0.25s ease;
+}
+.stay.collapsed .stay-body {
+  max-height: 0;
+  opacity: 0;
 }
 </style>
 </head>
@@ -563,6 +613,7 @@ h1 {
     <div><div class="stay-number">01</div><div class="stay-name">Osaka</div></div>
     <div class="stay-dates">Apr 18&ndash;21<br><span class="stay-nights">3 NIGHTS</span></div>
   </div>
+  <div class="stay-body">
   <div class="stay-trip-day">Trip days 1&ndash;3</div>
   <div class="stay-vibe">Japan's anti-Tokyo: louder, funnier, cheaper, more honest about its obsession with food. Osaka calls itself "the Nation's Kitchen" &mdash; a title it's held since the Edo period when it was the country's rice-trading hub. The energy here is street-level: neon-drenched food alleys, comedians busking in Namba, takoyaki stands with queues around the block. It's chaotic in the best way, and a perfect intro to Japan.</div>
   <div class="data-grid">
@@ -588,6 +639,7 @@ h1 {
     <a class="stay-link" href="https://osaka-info.jp/en/" target="_blank">Osaka Tourism</a>
     <a class="stay-link" href="https://www.japan-guide.com/e/e4001.html" target="_blank">Japan Guide &mdash; Osaka</a>
   </div>
+  </div>
 </div>
 
 <div class="relocation">
@@ -610,6 +662,7 @@ h1 {
     <div><div class="stay-number">02</div><div class="stay-name">Kyoto</div></div>
     <div class="stay-dates">Apr 21&ndash;25<br><span class="stay-nights">4 NIGHTS</span></div>
   </div>
+  <div class="stay-body">
   <div class="stay-trip-day">Trip days 4&ndash;7</div>
   <div class="stay-vibe">A thousand years of imperial history in a grid-pattern city framed by forested mountains on three sides. Kyoto is temples, tea, geisha, bamboo, and an almost absurd density of cultural heritage &mdash; 20% of Japan's national treasures are here, in a city with just 1% of its population. But it's also Nintendo's headquarters, a strong coffee scene, and backstreet izakayas where the food is extraordinary.</div>
   <div class="data-grid">
@@ -635,6 +688,7 @@ h1 {
     <a class="stay-link" href="https://kyoto.travel/en" target="_blank">Kyoto Tourism</a>
     <a class="stay-link" href="https://www.japan-guide.com/e/e2158.html" target="_blank">Japan Guide &mdash; Kyoto</a>
   </div>
+  </div>
 </div>
 
 <div class="relocation">
@@ -657,6 +711,7 @@ h1 {
     <div><div class="stay-number">03</div><div class="stay-name">Onomichi</div></div>
     <div class="stay-dates">Apr 25&ndash;28<br><span class="stay-nights">3 NIGHTS</span></div>
   </div>
+  <div class="stay-body">
   <div class="stay-trip-day">Trip days 8&ndash;10 &middot; Cumulative cycling: 50 km</div>
   <div class="stay-vibe">A port town built on slopes so steep that cars can't reach most of its temples. Onomichi is all narrow alleys, stray cats sunbathing on stone walls, and hillside views over the Seto Inland Sea. It has a literary history &mdash; the setting of Ozu's 1953 film <em>Tokyo Story</em> &mdash; and today young creatives have moved in, turning abandoned hillside houses into cafes and galleries. Also famous for its soy-sauce-and-pork-fat ramen.</div>
   <div class="data-grid">
@@ -682,6 +737,7 @@ h1 {
     <a class="stay-link" href="https://www.onomichiguide.com/" target="_blank">Onomichi Guide</a>
     <a class="stay-link" href="https://visitshimanami.com/" target="_blank">Visit Shimanami</a>
   </div>
+  </div>
 </div>
 
 <div class="relocation">
@@ -704,6 +760,7 @@ h1 {
     <div><div class="stay-number">04</div><div class="stay-name">Ikuchijima</div></div>
     <div class="stay-dates">Apr 28&ndash;30<br><span class="stay-nights">2 NIGHTS</span></div>
   </div>
+  <div class="stay-body">
   <div class="stay-trip-day">Trip days 11&ndash;12 &middot; Cumulative cycling: 83 km</div>
   <div class="stay-vibe">Japan's "Lemon Island" &mdash; a sun-drenched Seto Inland Sea island that produces more lemons than anywhere else in the country. The air smells like citrus, the light has a Mediterranean quality, and the pace is gloriously slow. The main town of Setoda has an old-fashioned shopping street (shotengai) that's come back to life with specialty coffee, gelato shops, and a ryokan by the founder of Aman resorts.</div>
   <div class="data-grid">
@@ -729,6 +786,7 @@ h1 {
     <a class="stay-link" href="https://setouchifinder.com/en/detail/594" target="_blank">Ikuchijima Island Guide</a>
     <a class="stay-link" href="https://shimanami-cycle.or.jp/cycling/en-02.html" target="_blank">Shimanami Cycling</a>
   </div>
+  </div>
 </div>
 
 <div class="relocation">
@@ -751,6 +809,7 @@ h1 {
     <div><div class="stay-number">05</div><div class="stay-name">Imabari</div></div>
     <div class="stay-dates">Apr 30&ndash;May 2<br><span class="stay-nights">2 NIGHTS</span></div>
   </div>
+  <div class="stay-body">
   <div class="stay-trip-day">Trip days 13&ndash;14 &middot; Cumulative cycling: 125 km &middot; Shimanami Kaido complete!</div>
   <div class="stay-vibe">A working shipbuilding and textile city on the Shikoku side of the Shimanami Kaido. Not a tourist town &mdash; that's part of the charm. Imabari's claim to fame is towels: it produces 60% of all towels made in Japan, an industry spanning 120+ years and nearly 200 factories. The towels are genuinely excellent (they must absorb water within 5 seconds to earn the Imabari brand), and they make a great souvenir.</div>
   <div class="data-grid">
@@ -775,6 +834,7 @@ h1 {
     <a class="stay-link" href="https://www.imabaritowel.jp/en" target="_blank">Imabari Towel Official</a>
     <a class="stay-link" href="https://cycling-ehime.com/en/" target="_blank">Cycling Ehime</a>
   </div>
+  </div>
 </div>
 
 <div class="relocation">
@@ -797,6 +857,7 @@ h1 {
     <div><div class="stay-number">06</div><div class="stay-name">Uchiko</div></div>
     <div class="stay-dates">May 2&ndash;4<br><span class="stay-nights">2 NIGHTS</span></div>
   </div>
+  <div class="stay-body">
   <div class="stay-trip-day">Trip days 15&ndash;16 &middot; Cumulative cycling: 205 km</div>
   <div class="stay-vibe">A pristine Edo/Meiji-era merchant town that made its fortune from wood wax and handmade paper. The Yokaichi Old Town district is one of the best-preserved historical streetscapes in Japan &mdash; white and yellow plaster warehouses, dark timber frames, stone-paved lanes. It feels like stepping into the 1890s, except there's a world-class kabuki theater around the corner.</div>
   <div class="data-grid">
@@ -821,6 +882,7 @@ h1 {
     <a class="stay-link" href="https://www.we-love-uchiko.jp/en/" target="_blank">We Love Uchiko</a>
     <a class="stay-link" href="https://www.japan-guide.com/e/e5550.html" target="_blank">Japan Guide &mdash; Uchiko</a>
   </div>
+  </div>
 </div>
 
 <div class="relocation">
@@ -842,6 +904,7 @@ h1 {
     <div><div class="stay-number">07</div><div class="stay-name">Ozu</div></div>
     <div class="stay-dates">May 4&ndash;6<br><span class="stay-nights">2 NIGHTS</span></div>
   </div>
+  <div class="stay-body">
   <div class="stay-trip-day">Trip days 17&ndash;18 &middot; Cumulative cycling: 217 km</div>
   <div class="stay-vibe">Known as the "Little Kyoto of Iyo," Ozu is a castle town on the Hijikawa River that prospered through sericulture, lacquerware, and traditional papermaking. The old town has paved alleys lined with Edo and Meiji buildings &mdash; it's impossibly quiet and photogenic. Recently, a NIPPONIA heritage hotel project has turned vacant historic buildings into boutique stays, breathing new life into the town.</div>
   <div class="data-grid">
@@ -866,6 +929,7 @@ h1 {
     <a class="stay-link" href="https://visitozu.com/" target="_blank">Visit Ozu</a>
     <a class="stay-link" href="https://www.japan-guide.com/e/e5560.html" target="_blank">Japan Guide &mdash; Ozu</a>
   </div>
+  </div>
 </div>
 
 <div class="relocation">
@@ -888,6 +952,7 @@ h1 {
     <div><div class="stay-number">08</div><div class="stay-name">Matsuyama</div></div>
     <div class="stay-dates">May 6&ndash;8<br><span class="stay-nights">2 NIGHTS</span></div>
   </div>
+  <div class="stay-body">
   <div class="stay-trip-day">Trip days 19&ndash;20 &middot; Cumulative cycling: 275 km</div>
   <div class="stay-vibe">Shikoku's largest city and the last stop before Tokyo. Matsuyama wraps around a hilltop castle and extends out to Dogo Onsen &mdash; the oldest hot spring in Japan, with a 3,000-year history. The bathhouse directly inspired the one in Miyazaki's <em>Spirited Away</em>. The city also has a literary connection: Natsume Soseki set his novel <em>Botchan</em> here, and there's a replica steam train named after it.</div>
   <div class="data-grid">
@@ -913,6 +978,7 @@ h1 {
     <a class="stay-link" href="https://en.matsuyama-sightseeing.com/" target="_blank">Matsuyama Tourism</a>
     <a class="stay-link" href="https://dogo.jp/" target="_blank">Dogo Onsen Official</a>
   </div>
+  </div>
 </div>
 
 <div class="relocation">
@@ -936,6 +1002,7 @@ h1 {
     <div><div class="stay-number">09</div><div class="stay-name">Tokyo</div></div>
     <div class="stay-dates">May 8&ndash;13<br><span class="stay-nights">5 NIGHTS</span></div>
   </div>
+  <div class="stay-body">
   <div class="stay-trip-day">Trip days 21&ndash;25</div>
   <div class="stay-vibe">The biggest possible gear-shift: from cycling through Shikoku rice paddies to the largest metropolitan area on earth. Every neighbourhood is its own world &mdash; Shimokitazawa for vintage shops, Yanaka for old-Tokyo temple streets, Daikanyama for design bookshops, Roppongi for museums. For a design-minded person, this is the motherlode: Tadao Ando buildings, Issey Miyake's museum, teamLab's immersive worlds, and more independent galleries than you could visit in a month.</div>
   <div class="data-grid">
@@ -972,6 +1039,7 @@ h1 {
     <a class="stay-link" href="https://www.2121designsight.jp/en/" target="_blank">21_21 DESIGN SIGHT</a>
     <a class="stay-link" href="https://www.teamlab.art/e/tokyo/" target="_blank">teamLab Borderless</a>
   </div>
+  </div>
 </div>
 
 <div class="relocation">
@@ -993,6 +1061,7 @@ h1 {
     <div><div class="stay-number">10</div><div class="stay-name">Osaka</div></div>
     <div class="stay-dates">May 13&ndash;14<br><span class="stay-nights">1 NIGHT</span></div>
   </div>
+  <div class="stay-body">
   <div class="stay-trip-day">Trip day 26 &middot; Final night</div>
   <div class="stay-vibe">Full circle. One last night where it all started. One final Dotonbori crawl. Pack up the bikes, pack up the memories.</div>
   <div class="highlights">
@@ -1002,6 +1071,7 @@ h1 {
       <span class="highlight-tag">Dotonbori walk</span>
       <span class="highlight-tag">Pack bikes for flight</span>
     </div>
+  </div>
   </div>
 </div>
 
@@ -1229,8 +1299,8 @@ h1 {
   ];
 
   // ── Draw route lines ─────────────────────────────────────
-  const bikeStyle  = { color: '#3A7A8A', weight: 3, opacity: 0.85, lineJoin: 'round', lineCap: 'round' };
-  const trainStyle = { color: '#2A3F5C', weight: 3, opacity: 0.80, dashArray: '9 7', lineJoin: 'round', lineCap: 'round' };
+  const bikeStyle  = { color: '#2C7D8E', weight: 3, opacity: 0.85, lineJoin: 'round', lineCap: 'round' };
+  const trainStyle = { color: '#1C3252', weight: 3, opacity: 0.80, dashArray: '9 7', lineJoin: 'round', lineCap: 'round' };
 
   tripRoutes.forEach(function (route) {
     L.polyline(route.path, route.mode === 'bike' ? bikeStyle : trainStyle).addTo(tripMap);
@@ -1261,6 +1331,14 @@ h1 {
 
   // ── Fit bounds ───────────────────────────────────────────
   tripMap.fitBounds(L.latLngBounds(tripStops.map(function (s) { return s.coords; })).pad(0.12));
+
+  // ── Collapsible stay cards ────────────────────────────────
+  document.querySelectorAll('.stay').forEach(function (card) {
+    card.classList.add('collapsed');
+    card.querySelector('.stay-header').addEventListener('click', function () {
+      card.classList.toggle('collapsed');
+    });
+  });
 
 }());
 </script>
