@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Japan Trip Map — Sam & Jess — April–May 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; }
+#map { height: 100vh; width: 100%; background: #FAF8F4; }
+
+/* ── Title card ─────────────────────────────────── */
+.map-title {
+  position: absolute;
+  top: 20px; left: 20px;
+  z-index: 1000;
+  background: rgba(255,255,255,0.96);
+  border: 1px solid #E8E5DE;
+  border-radius: 12px;
+  padding: 16px 20px;
+  max-width: 240px;
+  box-shadow: 0 2px 12px rgba(44,42,37,0.10);
+  pointer-events: none;
+}
+.map-title h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 18px; font-weight: 400;
+  color: #2C2A25; line-height: 1.25;
+  letter-spacing: -0.3px;
+}
+.map-title p {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px; color: #7A776E;
+  margin-top: 4px; font-weight: 500;
+}
+
+/* ── Legend ─────────────────────────────────────── */
+.map-legend {
+  position: absolute;
+  bottom: 32px; left: 20px;
+  z-index: 1000;
+  background: rgba(255,255,255,0.96);
+  border: 1px solid #E8E5DE;
+  border-radius: 10px;
+  padding: 12px 16px;
+  box-shadow: 0 2px 8px rgba(44,42,37,0.08);
+  pointer-events: none;
+}
+.legend-row {
+  display: flex; align-items: center; gap: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px; font-weight: 500; color: #7A776E;
+  margin-bottom: 7px;
+}
+.legend-row:last-child { margin-bottom: 0; }
+.legend-line {
+  width: 28px; height: 3px;
+  border-radius: 2px; flex-shrink: 0;
+}
+.legend-line.bike { background: #2E8B57; }
+.legend-line.train {
+  background: none;
+  border-top: 3px dashed #3B6FA0;
+  height: 0;
+}
+
+/* ── Stats strip ─────────────────────────────────── */
+.map-stats {
+  position: absolute;
+  bottom: 32px; right: 20px;
+  z-index: 1000;
+  background: rgba(255,255,255,0.96);
+  border: 1px solid #E8E5DE;
+  border-radius: 10px;
+  padding: 12px 16px;
+  box-shadow: 0 2px 8px rgba(44,42,37,0.08);
+  display: flex; gap: 20px;
+  pointer-events: none;
+}
+.stat {
+  text-align: center;
+  font-family: 'DM Sans', sans-serif;
+}
+.stat-num {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px; line-height: 1;
+}
+.stat-lbl {
+  font-size: 10px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.4px;
+  color: #7A776E; margin-top: 2px;
+}
+
+/* ── Stop markers ────────────────────────────────── */
+.stop-pin {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: #FFFFFF;
+  border: 2.5px solid;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px; font-weight: 600;
+  box-shadow: 0 2px 8px rgba(44,42,37,0.18);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+.stop-pin:hover { transform: scale(1.15); }
+.stop-pin.start { border-color: #6B5B4E; color: #6B5B4E; }
+.stop-pin.bike   { border-color: #2E8B57; color: #2E8B57; }
+.stop-pin.train  { border-color: #3B6FA0; color: #3B6FA0; }
+
+/* ── Tooltips ────────────────────────────────────── */
+.leaflet-tooltip.stop-tip {
+  background: #FFFFFF;
+  border: 1px solid #E8E5DE;
+  border-radius: 10px;
+  padding: 12px 14px;
+  box-shadow: 0 4px 16px rgba(44,42,37,0.12);
+  min-width: 190px;
+  pointer-events: none;
+}
+.leaflet-tooltip.stop-tip::before { display: none; }
+.tip-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 17px; font-weight: 400;
+  color: #2C2A25; letter-spacing: -0.2px;
+  line-height: 1.2;
+}
+.tip-meta {
+  display: flex; gap: 8px; align-items: center;
+  margin-top: 4px;
+}
+.tip-dates {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px; color: #7A776E; font-weight: 500;
+}
+.tip-nights {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px; font-weight: 600;
+  background: #F0ECE6; color: #6B5B4E;
+  padding: 2px 7px; border-radius: 20px;
+  letter-spacing: 0.2px;
+}
+.tip-desc {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px; color: #7A776E;
+  line-height: 1.5; margin-top: 7px;
+  padding-top: 7px;
+  border-top: 1px solid #F2F0EB;
+}
+.tip-mode {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px; font-weight: 600;
+  margin-top: 6px; padding: 3px 8px;
+  border-radius: 5px; display: inline-block;
+}
+.tip-mode.bike   { background: #E8F5EE; color: #2E8B57; }
+.tip-mode.train  { background: #E6EFF8; color: #3B6FA0; }
+.tip-mode.start  { background: #F0ECE6; color: #6B5B4E; }
+</style>
+</head>
+<body>
+<div id="map"></div>
+
+<!-- Title -->
+<div class="map-title">
+  <h1>Japan &middot; April&ndash;May 2026</h1>
+  <p>Sam & Jess &middot; 26 nights &middot; Own bikes</p>
+</div>
+
+<!-- Legend -->
+<div class="map-legend">
+  <div class="legend-row"><div class="legend-line bike"></div>Cycling (275 km)</div>
+  <div class="legend-row"><div class="legend-line train"></div>Train (3 legs)</div>
+</div>
+
+<!-- Stats -->
+<div class="map-stats">
+  <div class="stat"><div class="stat-num" style="color:#2E8B57;">275</div><div class="stat-lbl">km cycled</div></div>
+  <div class="stat"><div class="stat-num" style="color:#3B6FA0;">3</div><div class="stat-lbl">trains</div></div>
+  <div class="stat"><div class="stat-num" style="color:#2C2A25;">26</div><div class="stat-lbl">nights</div></div>
+</div>
+
+<script>
+// ── Map init ───────────────────────────────────────────────
+const map = L.map('map', {
+  zoomControl: true,
+  attributionControl: true
+});
+
+L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+  subdomains: 'abcd',
+  maxZoom: 19
+}).addTo(map);
+
+// ── Stop data ──────────────────────────────────────────────
+// Stop 1 and 10 are both Osaka — rendered as one combined start/end marker.
+const stops = [
+  {
+    id: 1, name: "Osaka",
+    coords: [34.694, 135.502],
+    dates: "Apr 18–21 · May 13–14",
+    nights: "3 + 1 nights",
+    desc: "Japan's street-food capital — departure point and full-circle return",
+    arrival: "start",
+    modeLabel: "Start / End"
+  },
+  {
+    id: 2, name: "Kyoto",
+    coords: [35.012, 135.768],
+    dates: "Apr 21–25",
+    nights: "4 nights",
+    desc: "A thousand years of imperial history, temples, bamboo, and tea",
+    arrival: "bike",
+    modeLabel: "🚲 50 km from Osaka"
+  },
+  {
+    id: 3, name: "Onomichi",
+    coords: [34.409, 133.205],
+    dates: "Apr 25–28",
+    nights: "3 nights",
+    desc: "A hillside port of cats, steep alleys, and Seto Inland Sea views",
+    arrival: "train",
+    modeLabel: "🚆 Train from Kyoto"
+  },
+  {
+    id: 4, name: "Ikuchijima",
+    coords: [34.304, 133.098],
+    dates: "Apr 28–30",
+    nights: "2 nights",
+    desc: "Japan's Lemon Island — sun-drenched, unhurried, and smelling of citrus",
+    arrival: "bike",
+    modeLabel: "🚲 Shimanami Kaido Day 1 · 33 km"
+  },
+  {
+    id: 5, name: "Imabari",
+    coords: [34.066, 132.998],
+    dates: "Apr 30–May 2",
+    nights: "2 nights",
+    desc: "Southern gateway of the Shimanami Kaido and Japan's towel capital",
+    arrival: "bike",
+    modeLabel: "🚲 Shimanami Kaido Day 2 · 42 km"
+  },
+  {
+    id: 6, name: "Uchiko",
+    coords: [33.544, 132.637],
+    dates: "May 2–4",
+    nights: "2 nights",
+    desc: "A perfectly preserved Edo-era merchant town deep in the Ehime hills",
+    arrival: "bike",
+    modeLabel: "🚲 ~80 km inland from Imabari"
+  },
+  {
+    id: 7, name: "Ozu",
+    coords: [33.506, 132.545],
+    dates: "May 4–6",
+    nights: "2 nights",
+    desc: "'Little Kyoto of Iyo' — a quiet castle town on the Hijikawa River",
+    arrival: "bike",
+    modeLabel: "🚲 12 km from Uchiko"
+  },
+  {
+    id: 8, name: "Matsuyama",
+    coords: [33.839, 132.766],
+    dates: "May 6–8",
+    nights: "2 nights",
+    desc: "Dogo Onsen, Japan's oldest hot spring, and an original hilltop castle",
+    arrival: "bike",
+    modeLabel: "🚲 ~58 km from Ozu"
+  },
+  {
+    id: 9, name: "Tokyo",
+    coords: [35.682, 139.769],
+    dates: "May 8–13",
+    nights: "5 nights",
+    desc: "The world's largest city — design, culture, food, and endless neighbourhoods",
+    arrival: "train",
+    modeLabel: "🚆 Train from Matsuyama"
+  }
+];
+
+// ── Route segments ─────────────────────────────────────────
+// Each segment: array of [lat, lng] waypoints forming the full path.
+// Train routes follow approximate real rail corridors.
+const routes = [
+  // 1. Osaka → Kyoto (bike, Yodogawa River path)
+  {
+    mode: "bike",
+    path: [
+      [34.694, 135.502],
+      [34.800, 135.580],
+      [35.012, 135.768]
+    ]
+  },
+  // 2. Kyoto → Onomichi (train, Sanyo Shinkansen)
+  {
+    mode: "train",
+    path: [
+      [35.012, 135.768],
+      [34.733, 135.500], // Shin-Osaka
+      [34.690, 135.195], // Kobe
+      [34.830, 134.690], // Himeji
+      [34.810, 134.340], // West of Himeji
+      [34.490, 133.365], // Fukuyama
+      [34.409, 133.205]  // Onomichi
+    ]
+  },
+  // 3. Onomichi → Ikuchijima (bike, Shimanami Kaido Day 1)
+  {
+    mode: "bike",
+    path: [
+      [34.409, 133.205], // Onomichi
+      [34.395, 133.190], // Mukaishima (ferry)
+      [34.349, 133.164], // Innoshima
+      [34.304, 133.098]  // Ikuchijima
+    ]
+  },
+  // 4. Ikuchijima → Imabari (bike, Shimanami Kaido Day 2)
+  {
+    mode: "bike",
+    path: [
+      [34.304, 133.098], // Ikuchijima
+      [34.255, 133.003], // Omishima
+      [34.162, 132.977], // Hakatajima
+      [34.107, 132.997], // Oshima
+      [34.066, 132.998]  // Imabari
+    ]
+  },
+  // 5. Imabari → Uchiko (bike, hilly inland ~80 km)
+  {
+    mode: "bike",
+    path: [
+      [34.066, 132.998], // Imabari
+      [33.920, 132.920],
+      [33.780, 132.810],
+      [33.660, 132.720],
+      [33.544, 132.637]  // Uchiko
+    ]
+  },
+  // 6. Uchiko → Ozu (bike, riverside ~12 km)
+  {
+    mode: "bike",
+    path: [
+      [33.544, 132.637], // Uchiko
+      [33.506, 132.545]  // Ozu
+    ]
+  },
+  // 7. Ozu → Matsuyama (bike, Hijikawa valley ~58 km)
+  {
+    mode: "bike",
+    path: [
+      [33.506, 132.545], // Ozu
+      [33.590, 132.590],
+      [33.690, 132.660],
+      [33.780, 132.730],
+      [33.839, 132.766]  // Matsuyama
+    ]
+  },
+  // 8. Matsuyama → Tokyo (train, via Okayama then Tokaido Shinkansen)
+  {
+    mode: "train",
+    path: [
+      [33.839, 132.766], // Matsuyama
+      [34.100, 133.100],
+      [34.655, 133.919], // Okayama
+      [34.830, 134.690], // Himeji
+      [34.733, 135.500], // Shin-Osaka
+      [35.012, 135.768], // Kyoto
+      [35.170, 136.882], // Nagoya
+      [35.290, 138.380], // Shizuoka area
+      [35.466, 139.623], // Shin-Yokohama
+      [35.682, 139.769]  // Tokyo
+    ]
+  },
+  // 9. Tokyo → Osaka (train, Tokaido Shinkansen)
+  {
+    mode: "train",
+    path: [
+      [35.682, 139.769], // Tokyo
+      [35.466, 139.623], // Shin-Yokohama
+      [35.290, 138.380], // Shizuoka area
+      [35.170, 136.882], // Nagoya
+      [35.012, 135.768], // Kyoto
+      [34.694, 135.502]  // Osaka
+    ]
+  }
+];
+
+// ── Draw route lines ───────────────────────────────────────
+const bikeStyle  = { color: '#2E8B57', weight: 3, opacity: 0.85, lineJoin: 'round', lineCap: 'round' };
+const trainStyle = { color: '#3B6FA0', weight: 3, opacity: 0.80, dashArray: '9 7', lineJoin: 'round', lineCap: 'round' };
+
+routes.forEach(route => {
+  const style = route.mode === 'bike' ? bikeStyle : trainStyle;
+  L.polyline(route.path, style).addTo(map);
+});
+
+// ── Tooltip builder ────────────────────────────────────────
+function makeTip(stop) {
+  const modeClass = stop.arrival;
+  return `
+    <div class="tip-name">${stop.name}</div>
+    <div class="tip-meta">
+      <span class="tip-dates">${stop.dates}</span>
+      <span class="tip-nights">${stop.nights}</span>
+    </div>
+    <div class="tip-desc">${stop.desc}</div>
+    <div class="tip-mode ${modeClass}">${stop.modeLabel}</div>
+  `;
+}
+
+// ── Place markers ──────────────────────────────────────────
+stops.forEach(stop => {
+  const pinClass = `stop-pin ${stop.arrival}`;
+  const label    = String(stop.id).padStart(2, '0');
+
+  const icon = L.divIcon({
+    className: '',
+    html: `<div class="${pinClass}">${label}</div>`,
+    iconSize: [30, 30],
+    iconAnchor: [15, 15],
+    tooltipAnchor: [16, 0]
+  });
+
+  const marker = L.marker(stop.coords, { icon, zIndexOffset: stop.id * 10 })
+    .addTo(map)
+    .bindTooltip(makeTip(stop), {
+      className: 'stop-tip',
+      direction: 'right',
+      offset: [16, 0],
+      opacity: 1
+    });
+});
+
+// ── Fit map to all stops ───────────────────────────────────
+const allCoords = stops.map(s => s.coords);
+map.fitBounds(L.latLngBounds(allCoords).pad(0.12));
+
+</script>
+</body>
+</html>
