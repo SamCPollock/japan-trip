@@ -100,11 +100,35 @@ h1 {
 }
 
 /* ── LEGEND ───────────────────────────────────────────── */
+.legend-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 36px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
 .legend {
   display: flex;
   gap: 20px;
-  margin-bottom: 36px;
   flex-wrap: wrap;
+}
+#toggle-all-btn {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 5px 14px;
+  cursor: pointer;
+  letter-spacing: 0.2px;
+  transition: border-color 0.15s, color 0.15s;
+}
+#toggle-all-btn:hover {
+  border-color: var(--gold-border);
+  color: var(--text);
 }
 .legend-item {
   display: flex;
@@ -247,6 +271,56 @@ h1 {
   border-left: 4px solid var(--gold-border);
   border-radius: 0 8px 8px 0;
 }
+
+/* ── LODGING ──────────────────────────────────────────── */
+.lodging {
+  margin-top: 14px;
+  background: var(--data-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 11px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+.lodging-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-light);
+  margin-bottom: 4px;
+}
+.lodging-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.3;
+}
+.lodging-meta {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 3px;
+}
+.lodging-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.55;
+  margin-top: 6px;
+}
+.lodging-link {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent-train);
+  text-decoration: none;
+  white-space: nowrap;
+  border-bottom: 1px dashed var(--accent-train-border);
+  padding: 3px 0;
+  flex-shrink: 0;
+  align-self: center;
+}
+.lodging-link:hover { border-bottom-style: solid; }
 
 /* ── LINKS ────────────────────────────────────────────── */
 .stay-links { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px; }
@@ -494,6 +568,42 @@ h1 {
   height: 0;
 }
 
+/* Map lodging pins */
+.lodging-pin {
+  width: 22px; height: 22px;
+  border-radius: 5px;
+  background: var(--gold-bg);
+  border: 2px solid var(--gold);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px;
+  box-shadow: 0 2px 6px rgba(44, 32, 16, 0.20);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+.lodging-pin:hover { transform: scale(1.2); }
+
+/* Map layer toggle button */
+#map-layer-toggle {
+  position: absolute;
+  top: 14px; right: 14px;
+  z-index: 1000;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: rgba(251, 248, 242, 0.95);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 6px 14px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(44, 32, 16, 0.08);
+  transition: border-color 0.15s, color 0.15s;
+}
+#map-layer-toggle:hover {
+  border-color: var(--gold-border);
+  color: var(--text);
+}
+
 /* Map stop pins */
 .stop-pin {
   width: 30px; height: 30px;
@@ -601,10 +711,13 @@ h1 {
 <h1>Japan &middot; April&ndash;May 2026</h1>
 <p class="subtitle">Sam & Jess &middot; 26 nights &middot; 10 stops &middot; Own bikes in rinko bags</p>
 
-<div class="legend">
-  <div class="legend-item"><div class="legend-dot bike"></div>Cycling</div>
-  <div class="legend-item"><div class="legend-dot train"></div>Train</div>
-  <div class="legend-item"><div class="legend-dot flight"></div>Flight</div>
+<div class="legend-row">
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot bike"></div>Cycling</div>
+    <div class="legend-item"><div class="legend-dot train"></div>Train</div>
+    <div class="legend-item"><div class="legend-dot flight"></div>Flight</div>
+  </div>
+  <button id="toggle-all-btn">Collapse all</button>
 </div>
 
 <!-- 1. OSAKA -->
@@ -638,6 +751,15 @@ h1 {
   <div class="stay-links">
     <a class="stay-link" href="https://osaka-info.jp/en/" target="_blank">Osaka Tourism</a>
     <a class="stay-link" href="https://www.japan-guide.com/e/e4001.html" target="_blank">Japan Guide &mdash; Osaka</a>
+  </div>
+  <div class="lodging">
+    <div>
+      <div class="lodging-label">&#x1f3e0; Where we're staying</div>
+      <div class="lodging-name">BIO_001 &mdash; The Design Studio Room</div>
+      <div class="lodging-meta">Kita Ward &middot; Renovated historic townhouse &middot; Up to 3 guests &middot; &#11088; 4.96 (303 reviews)</div>
+      <div class="lodging-desc">Part of a five-room collection in a carefully restored wooden townhouse in central Osaka, blending traditional architecture with seismic-reinforced, well-insulated modern comforts.</div>
+    </div>
+    <a class="lodging-link" href="https://www.airbnb.ca/rooms/26993227" target="_blank">View on Airbnb &rarr;</a>
   </div>
   </div>
 </div>
@@ -688,6 +810,15 @@ h1 {
     <a class="stay-link" href="https://kyoto.travel/en" target="_blank">Kyoto Tourism</a>
     <a class="stay-link" href="https://www.japan-guide.com/e/e2158.html" target="_blank">Japan Guide &mdash; Kyoto</a>
   </div>
+  <div class="lodging">
+    <div>
+      <div class="lodging-label">&#x1f3e0; Where we're staying</div>
+      <div class="lodging-name">&ldquo;Hotei-an&rdquo; Machiya House</div>
+      <div class="lodging-meta">Higashiyama-ku &middot; Traditional machiya &middot; Up to 6 guests &middot; &#11088; 4.79 (163 reviews)</div>
+      <div class="lodging-desc">A restored machiya townhouse named after the deity of good luck, with seven enshrined statues and a serene Zen atmosphere. Minutes from Fushimi Inari, and one of the most culturally rich parts of the city.</div>
+    </div>
+    <a class="lodging-link" href="https://www.airbnb.ca/rooms/21374794" target="_blank">View on Airbnb &rarr;</a>
+  </div>
   </div>
 </div>
 
@@ -736,6 +867,15 @@ h1 {
   <div class="stay-links">
     <a class="stay-link" href="https://www.onomichiguide.com/" target="_blank">Onomichi Guide</a>
     <a class="stay-link" href="https://visitshimanami.com/" target="_blank">Visit Shimanami</a>
+  </div>
+  <div class="lodging">
+    <div>
+      <div class="lodging-label">&#x1f3e0; Where we're staying</div>
+      <div class="lodging-name">Hidden Inn at the End of the Road</div>
+      <div class="lodging-meta">Onomichi &middot; Renovated warehouse cottage &middot; Up to 3 guests &middot; &#11088; 4.96 (46 reviews)</div>
+      <div class="lodging-desc">A snug two-floor cottage tucked into the hillside in a renovated warehouse, with an 8-minute walk down to the harbour and shopping district. Compact but not cramped &mdash; very much in the Onomichi spirit.</div>
+    </div>
+    <a class="lodging-link" href="https://www.airbnb.ca/rooms/1011835570117402203" target="_blank">View on Airbnb &rarr;</a>
   </div>
   </div>
 </div>
@@ -786,6 +926,15 @@ h1 {
     <a class="stay-link" href="https://setouchifinder.com/en/detail/594" target="_blank">Ikuchijima Island Guide</a>
     <a class="stay-link" href="https://shimanami-cycle.or.jp/cycling/en-02.html" target="_blank">Shimanami Cycling</a>
   </div>
+  <div class="lodging">
+    <div>
+      <div class="lodging-label">&#x1f3e0; Where we're staying</div>
+      <div class="lodging-name">Agrit Island Time</div>
+      <div class="lodging-meta">1 min to Sunset Beach &middot; New cypress cottage &middot; Up to 4 guests &middot; &#11088; 5.0 (5 reviews)</div>
+      <div class="lodging-desc">A brand-new (2023) 50 m&sup2; cottage with fragrant cypress interiors, a private vegetable garden, and one minute&rsquo;s walk to the beach. A good place to decompress after day one of the Shimanami Kaido.</div>
+    </div>
+    <a class="lodging-link" href="https://www.airbnb.ca/rooms/1381484960398624350" target="_blank">View on Airbnb &rarr;</a>
+  </div>
   </div>
 </div>
 
@@ -833,6 +982,15 @@ h1 {
   <div class="stay-links">
     <a class="stay-link" href="https://www.imabaritowel.jp/en" target="_blank">Imabari Towel Official</a>
     <a class="stay-link" href="https://cycling-ehime.com/en/" target="_blank">Cycling Ehime</a>
+  </div>
+  <div class="lodging">
+    <div>
+      <div class="lodging-label">&#x1f3e0; Where we're staying</div>
+      <div class="lodging-name">Auberge Yugashira</div>
+      <div class="lodging-meta">Ōmishima island &middot; Seto Inland Sea views &middot; Up to 3 guests &middot; &#11088; 4.98 (189 reviews)</div>
+      <div class="lodging-desc">An intimate farm-stay inn on Ōmishima island that takes only one group at a time. Elevated position with window views over the Seto Inland Sea &mdash; a genuinely special stop in the middle of the Shimanami Kaido.</div>
+    </div>
+    <a class="lodging-link" href="https://www.airbnb.ca/rooms/49931059" target="_blank">View on Airbnb &rarr;</a>
   </div>
   </div>
 </div>
@@ -882,6 +1040,15 @@ h1 {
     <a class="stay-link" href="https://www.we-love-uchiko.jp/en/" target="_blank">We Love Uchiko</a>
     <a class="stay-link" href="https://www.japan-guide.com/e/e5550.html" target="_blank">Japan Guide &mdash; Uchiko</a>
   </div>
+  <div class="lodging">
+    <div>
+      <div class="lodging-label">&#x1f3e0; Where we're staying</div>
+      <div class="lodging-name">Sobadamari &mdash; National Cultural Property</div>
+      <div class="lodging-meta">Uchiko-cho &middot; Historic Showa-era wooden house &middot; Up to 5 guests &middot; &#11088; 4.86 (37 reviews)</div>
+      <div class="lodging-desc">A whole early Showa-era wooden house along an old country road, designated as a national cultural property. The Oda River runs along the back garden &mdash; completely quiet, completely in keeping with Uchiko&rsquo;s preserved character.</div>
+    </div>
+    <a class="lodging-link" href="https://www.airbnb.ca/rooms/732310672995310308" target="_blank">View on Airbnb &rarr;</a>
+  </div>
   </div>
 </div>
 
@@ -928,6 +1095,15 @@ h1 {
   <div class="stay-links">
     <a class="stay-link" href="https://visitozu.com/" target="_blank">Visit Ozu</a>
     <a class="stay-link" href="https://www.japan-guide.com/e/e5560.html" target="_blank">Japan Guide &mdash; Ozu</a>
+  </div>
+  <div class="lodging">
+    <div>
+      <div class="lodging-label">&#x1f3e0; Where we're staying</div>
+      <div class="lodging-name">Hotel Ota &mdash; Japanese Twin Room</div>
+      <div class="lodging-meta">Ozu station-front &middot; Traditional Japanese style &middot; 2 guests &middot; &#11088; 5.0 (1 review)</div>
+      <div class="lodging-desc">A well-regarded station-front hotel with a traditional Japanese-style room, right in the centre of the castle town. Practical and comfortable after the short ride from Uchiko, with the old townscape on the doorstep.</div>
+    </div>
+    <a class="lodging-link" href="https://www.airbnb.ca/rooms/939459956988213154" target="_blank">View on Airbnb &rarr;</a>
   </div>
   </div>
 </div>
@@ -977,6 +1153,15 @@ h1 {
   <div class="stay-links">
     <a class="stay-link" href="https://en.matsuyama-sightseeing.com/" target="_blank">Matsuyama Tourism</a>
     <a class="stay-link" href="https://dogo.jp/" target="_blank">Dogo Onsen Official</a>
+  </div>
+  <div class="lodging">
+    <div>
+      <div class="lodging-label">&#x1f3e0; Where we're staying</div>
+      <div class="lodging-name">Inn in the Best Location in Matsuyama</div>
+      <div class="lodging-meta">Central Matsuyama &middot; Top-floor apartment &middot; Up to 3 guests &middot; &#11088; 4.97 (179 reviews)</div>
+      <div class="lodging-desc">A top-floor apartment in the heart of the city, within easy reach of Matsuyama Castle, Dogo Onsen, and a local historic public bath. Private kitchen, bath, and toilet &mdash; all the amenities for the final cycling recovery day.</div>
+    </div>
+    <a class="lodging-link" href="https://www.airbnb.ca/rooms/12682829" target="_blank">View on Airbnb &rarr;</a>
   </div>
   </div>
 </div>
@@ -1039,6 +1224,15 @@ h1 {
     <a class="stay-link" href="https://www.2121designsight.jp/en/" target="_blank">21_21 DESIGN SIGHT</a>
     <a class="stay-link" href="https://www.teamlab.art/e/tokyo/" target="_blank">teamLab Borderless</a>
   </div>
+  <div class="lodging">
+    <div>
+      <div class="lodging-label">&#x1f3e0; Where we're staying</div>
+      <div class="lodging-name">Shimokitazawa Studio</div>
+      <div class="lodging-meta">Setagaya-ku &middot; 2 min from Shimokitazawa Station &middot; Up to 4 guests &middot; &#11088; 4.83 (103 reviews)</div>
+      <div class="lodging-desc">A 30 m&sup2; fifth-floor studio with two double beds and a balcony, two minutes from one of Tokyo&rsquo;s best neighbourhoods for vintage shops, live music venues, and independent cafes. Washer, full kitchen, high-speed wifi included.</div>
+    </div>
+    <a class="lodging-link" href="https://www.airbnb.ca/rooms/795278732965706223" target="_blank">View on Airbnb &rarr;</a>
+  </div>
   </div>
 </div>
 
@@ -1098,6 +1292,7 @@ h1 {
     <div class="map-legend-row"><div class="map-legend-line bike"></div>Cycling</div>
     <div class="map-legend-row"><div class="map-legend-line train"></div>Train</div>
   </div>
+  <button id="map-layer-toggle">Show lodgings</button>
 </div>
 
 <!-- STATS -->
@@ -1307,6 +1502,8 @@ h1 {
   });
 
   // ── Place markers ────────────────────────────────────────
+  var stopsLayer = L.layerGroup().addTo(tripMap);
+
   tripStops.forEach(function (stop) {
     var icon = L.divIcon({
       className: '',
@@ -1325,19 +1522,81 @@ h1 {
       '<div class="tip-mode ' + stop.arrival + '">' + stop.modeLabel + '</div>';
 
     L.marker(stop.coords, { icon: icon, zIndexOffset: stop.id * 10 })
-      .addTo(tripMap)
+      .addTo(stopsLayer)
       .bindTooltip(tip, { className: 'stop-tip', direction: 'right', offset: [16, 0], opacity: 1 });
+  });
+
+  // ── Lodging markers ──────────────────────────────────────
+  var lodgingLayer = L.layerGroup(); // not added to map yet
+
+  var lodgings = [
+    { coords: [34.7119, 135.4966], name: "BIO_001 — The Design Studio Room",       location: "Kita Ward, Osaka",                   url: "https://www.airbnb.ca/rooms/26993227" },
+    { coords: [34.9712, 135.7761], name: "\"Hotei-an\" Machiya House",              location: "Higashiyama-ku, Kyoto",              url: "https://www.airbnb.ca/rooms/21374794" },
+    { coords: [34.4072, 133.2008], name: "Hidden Inn at the End of the Road",       location: "Hillside, Onomichi",                 url: "https://www.airbnb.ca/rooms/1011835570117402203" },
+    { coords: [34.2893, 133.0775], name: "Agrit Island Time",                       location: "Near Sunset Beach, Ikuchijima",      url: "https://www.airbnb.ca/rooms/1381484960398624350" },
+    { coords: [34.2522, 133.0049], name: "Auberge Yugashira",                       location: "Ōmishima island, Shimanami Kaido",   url: "https://www.airbnb.ca/rooms/49931059" },
+    { coords: [33.5440, 132.6372], name: "Sobadamari — National Cultural Property", location: "Uchiko-cho, Ehime",                  url: "https://www.airbnb.ca/rooms/732310672995310308" },
+    { coords: [33.5063, 132.5456], name: "Hotel Ota — Japanese Twin Room",          location: "Station-front, Ozu",                 url: "https://www.airbnb.ca/rooms/939459956988213154" },
+    { coords: [33.8370, 132.7640], name: "Inn in the Best Location in Matsuyama",   location: "Central Matsuyama",                  url: "https://www.airbnb.ca/rooms/12682829" },
+    { coords: [35.6617, 139.6684], name: "Shimokitazawa Studio",                    location: "Setagaya-ku, Tokyo",                 url: "https://www.airbnb.ca/rooms/795278732965706223" }
+  ];
+
+  lodgings.forEach(function (lodging) {
+    var icon = L.divIcon({
+      className: '',
+      html: '<div class="lodging-pin">🏠</div>',
+      iconSize: [22, 22],
+      iconAnchor: [11, 11],
+      tooltipAnchor: [12, 0]
+    });
+    var tip = '<div class="tip-name" style="font-size:15px">' + lodging.name + '</div>' +
+      '<div class="tip-desc" style="margin-top:4px;padding-top:0;border-top:none">' + lodging.location + '</div>';
+    L.marker(lodging.coords, { icon: icon, zIndexOffset: 500 })
+      .addTo(lodgingLayer)
+      .bindTooltip(tip, { className: 'stop-tip', direction: 'right', offset: [12, 0], opacity: 1 });
+  });
+
+  // ── Map layer toggle ──────────────────────────────────────
+  var showingLodgings = false;
+  var mapToggleBtn = document.getElementById('map-layer-toggle');
+  mapToggleBtn.addEventListener('click', function () {
+    showingLodgings = !showingLodgings;
+    if (showingLodgings) {
+      tripMap.removeLayer(stopsLayer);
+      lodgingLayer.addTo(tripMap);
+      mapToggleBtn.textContent = 'Show destinations';
+    } else {
+      tripMap.removeLayer(lodgingLayer);
+      stopsLayer.addTo(tripMap);
+      mapToggleBtn.textContent = 'Show lodgings';
+    }
   });
 
   // ── Fit bounds ───────────────────────────────────────────
   tripMap.fitBounds(L.latLngBounds(tripStops.map(function (s) { return s.coords; })).pad(0.12));
 
   // ── Collapsible stay cards ────────────────────────────────
-  document.querySelectorAll('.stay').forEach(function (card) {
-    card.classList.add('collapsed');
+  var cards = document.querySelectorAll('.stay');
+  var toggleBtn = document.getElementById('toggle-all-btn');
+
+  cards.forEach(function (card) {
     card.querySelector('.stay-header').addEventListener('click', function () {
       card.classList.toggle('collapsed');
+      updateToggleBtn();
     });
+  });
+
+  function updateToggleBtn() {
+    var anyExpanded = Array.from(cards).some(function (c) { return !c.classList.contains('collapsed'); });
+    toggleBtn.textContent = anyExpanded ? 'Collapse all' : 'Expand all';
+  }
+
+  toggleBtn.addEventListener('click', function () {
+    var anyExpanded = Array.from(cards).some(function (c) { return !c.classList.contains('collapsed'); });
+    cards.forEach(function (card) {
+      card.classList.toggle('collapsed', anyExpanded);
+    });
+    updateToggleBtn();
   });
 
 }());
