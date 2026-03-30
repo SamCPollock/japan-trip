@@ -1,0 +1,2213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Japan Trip — Sam & Jess — April–May 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   DESIGN SYSTEM — Mediterranean Editorial · Dynamic
+   Cormorant Garamond (display) · DM Sans (body)
+   Rich parchment · Bold teal · Deep navy · Vivid terracotta
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+:root {
+  /* Page backgrounds */
+  --bg:            #EDE5D3;
+  --surface:       #F9F4E8;
+  --data-bg:       #E5D9C5;
+  --tag-bg:        #DDD4C0;
+
+  /* Text */
+  --text:          #1E1A14;
+  --text-muted:    #5E5446;
+  --text-light:    #9A8E7A;
+
+  /* Structure */
+  --border:        #CABFAA;
+  --divider:       #D8CEBC;
+
+  /* ── Mode: Cycling / Bike — bold teal ── */
+  --accent-bike:        #2C7D8E;
+  --accent-bike-bg:     #D5EEF2;
+  --accent-bike-border: #87C5D0;
+
+  /* ── Mode: Train — deep navy ── */
+  --accent-train:        #1C3252;
+  --accent-train-bg:     #D2E3EE;
+  --accent-train-border: #8AAABF;
+
+  /* ── Mode: Flight — vivid terracotta ── */
+  --accent-flight:        #C24428;
+  --accent-flight-bg:     #F5DED6;
+  --accent-flight-border: #D8907A;
+
+  /* Golden accent — stay badges, highlights */
+  --gold:           #C08820;
+  --gold-bg:        #F5E8BC;
+  --gold-border:    #D8B84E;
+
+  /* Semantic tones */
+  --teal:         #2C7D8E;
+  --teal-dark:    #1B5470;
+  --teal-bg:      #D5EEF2;
+  --navy:         #1C3252;
+  --navy-bg:      #D2E3EE;
+  --terra:        #C24428;
+  --terra-dark:   #8A2E18;
+  --terra-bg:     #F5DED6;
+
+  /* Aliases — used by inline HTML styles and existing selectors */
+  --card-bg:     var(--surface);
+  --card-border: var(--border);
+  --tag-stay:    #7A6040;
+  --tag-stay-bg: var(--gold-bg);
+  --link-color:  var(--accent-train);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  line-height: 1.65;
+  padding: 44px 24px 88px;
+  max-width: 740px;
+  margin: 0 auto;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── PAGE HEADER ──────────────────────────────────────── */
+.page-header {
+  margin-bottom: 28px;
+}
+h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 52px;
+  font-weight: 400;
+  letter-spacing: -1px;
+  line-height: 1.0;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+.subtitle {
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+  margin-bottom: 16px;
+}
+.header-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 0;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+#toggle-all-btn {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 5px 14px;
+  cursor: pointer;
+  letter-spacing: 0.2px;
+  transition: border-color 0.15s, color 0.15s;
+}
+#toggle-all-btn:hover {
+  border-color: var(--gold-border);
+  color: var(--text);
+}
+@media (max-width: 600px) {
+  .page-header {
+    margin-bottom: 24px;
+  }
+  .header-actions {
+    justify-content: flex-start;
+  }
+}
+
+/* ── STAY CARDS ───────────────────────────────────────── */
+.stay {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--gold);
+  border-radius: 14px;
+  padding: 26px 30px;
+  position: relative;
+  box-shadow: 0 4px 18px rgba(44, 32, 16, 0.10);
+}
+.stay-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 4px;
+}
+.stay-number {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-light);
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+.stay-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 42px;
+  font-weight: 400;
+  letter-spacing: -0.8px;
+  line-height: 1.0;
+  color: var(--text);
+}
+.stay-dates {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-weight: 500;
+  text-align: right;
+  white-space: nowrap;
+}
+.stay-nights {
+  display: inline-block;
+  background: var(--gold-bg);
+  color: var(--gold);
+  border: 1px solid var(--gold-border);
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  margin-top: 5px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.stay-trip-day {
+  font-size: 12px;
+  color: var(--text-light);
+  margin-top: 4px;
+  letter-spacing: 0.1px;
+}
+
+/* ── VIBE ─────────────────────────────────────────────── */
+.stay-vibe {
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.7;
+  margin-top: 14px;
+}
+
+/* ── PHOTO GRID ───────────────────────────────────────── */
+.stay-photos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin-top: 14px;
+}
+.stay-photos img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  display: block;
+  border-radius: 6px;
+  cursor: zoom-in;
+  transition: opacity 0.15s ease;
+}
+.stay-photos img:hover {
+  opacity: 0.88;
+}
+
+/* ── LIGHTBOX ─────────────────────────────────────────── */
+#lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.82);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  cursor: zoom-out;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  animation: lb-in 0.18s ease;
+}
+#lightbox.active {
+  display: flex;
+}
+#lightbox img {
+  max-width: min(92vw, 1000px);
+  max-height: 88vh;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 8px 48px rgba(0,0,0,0.6);
+  cursor: zoom-out;
+  animation: lb-img-in 0.2s ease;
+}
+#lightbox-close {
+  position: fixed;
+  top: 18px;
+  right: 22px;
+  color: #fff;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0.75;
+  background: none;
+  border: none;
+  padding: 4px 8px;
+  transition: opacity 0.15s;
+}
+#lightbox-close:hover {
+  opacity: 1;
+}
+@keyframes lb-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes lb-img-in {
+  from { transform: scale(0.93); opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
+}
+
+/* ── DATA GRID ────────────────────────────────────────── */
+.data-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 8px;
+  margin-top: 16px;
+}
+.data-item {
+  background: var(--data-bg);
+  border-radius: 8px;
+  padding: 10px 13px;
+}
+.data-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-light);
+  margin-bottom: 3px;
+}
+.data-value {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.3;
+}
+
+/* ── HIGHLIGHTS ───────────────────────────────────────── */
+.highlights { margin-top: 16px; }
+.highlight-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-light);
+  margin-bottom: 7px;
+}
+.highlight-list { display: flex; flex-wrap: wrap; gap: 6px; }
+.highlight-tag {
+  font-size: 12px;
+  padding: 4px 11px;
+  border-radius: 20px;
+  background: var(--teal-bg);
+  color: var(--teal-dark);
+  font-weight: 500;
+  border: 1px solid var(--accent-bike-border);
+}
+
+/* ── TRIVIA ───────────────────────────────────────────── */
+.trivia {
+  margin-top: 16px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+  font-style: italic;
+  color: #6B4E10;
+  line-height: 1.65;
+  padding: 12px 16px;
+  background: var(--gold-bg);
+  border-left: 4px solid var(--gold-border);
+  border-radius: 0 8px 8px 0;
+}
+
+/* ── LODGING ──────────────────────────────────────────── */
+.lodging {
+  margin-top: 14px;
+  background: var(--data-bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 11px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+.lodging-label {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-light);
+  margin-bottom: 4px;
+}
+.lodging-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.3;
+}
+.lodging-meta {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 3px;
+}
+.lodging-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.55;
+  margin-top: 6px;
+}
+.lodging-link {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent-train);
+  text-decoration: none;
+  white-space: nowrap;
+  border-bottom: 1px dashed var(--accent-train-border);
+  padding: 3px 0;
+  flex-shrink: 0;
+  align-self: center;
+}
+.lodging-link:hover { border-bottom-style: solid; }
+
+/* ── LINKS ────────────────────────────────────────────── */
+.stay-links { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 8px; }
+.stay-link {
+  font-size: 12px;
+  color: var(--accent-train);
+  text-decoration: none;
+  font-weight: 500;
+  padding: 3px 0;
+  border-bottom: 1px dashed var(--accent-train-border);
+}
+.stay-link:hover { border-bottom-style: solid; }
+
+/* ── RELOCATION CONNECTORS ────────────────────────────── */
+.relocation {
+  margin: 0;
+  padding: 16px 0 16px 46px;
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+.relocation::before {
+  content: '';
+  position: absolute;
+  left: 23px; top: 0; bottom: 0;
+  width: 2px;
+  background: var(--divider);
+}
+.relocation-icon {
+  width: 46px; height: 46px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+  margin-left: -46px;
+  border: 2px solid;
+}
+.relocation-icon.bike   { background: var(--accent-bike-bg);   border-color: var(--accent-bike-border);   color: var(--accent-bike); }
+.relocation-icon.train  { background: var(--accent-train-bg);  border-color: var(--accent-train-border);  color: var(--accent-train); }
+.relocation-icon.flight { background: var(--accent-flight-bg); border-color: var(--accent-flight-border); color: var(--accent-flight); }
+.relocation-body { flex: 1; padding: 4px 0; }
+.relocation-title {
+  font-weight: 600;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+}
+.relocation-title.bike   { color: var(--accent-bike); }
+.relocation-title.train  { color: var(--accent-train); }
+.relocation-title.flight { color: var(--accent-flight); }
+.relocation-route {
+  font-size: 14px;
+  color: var(--text);
+  margin-top: 2px;
+  font-weight: 500;
+}
+.relocation-details { margin-top: 8px; display: flex; flex-wrap: wrap; gap: 6px; }
+.detail-chip {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.detail-chip.bike   { background: var(--accent-bike);   color: #fff; }
+.detail-chip.train  { background: var(--accent-train);  color: #fff; }
+.detail-chip.flight { background: var(--accent-flight); color: #fff; }
+.relocation-steps {
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+.relocation-steps strong { color: var(--text); font-weight: 500; }
+.relocation-note {
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--text-muted);
+  background: var(--data-bg);
+  padding: 9px 13px;
+  border-radius: 8px;
+  line-height: 1.55;
+  border-left: 3px solid var(--border);
+}
+
+/* ── STATS ────────────────────────────────────────────── */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 32px;
+}
+.stat-box {
+  text-align: center;
+  padding: 24px 16px 20px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  border-top: 4px solid var(--gold);
+  background: var(--gold-bg);
+  box-shadow: 0 3px 12px rgba(44, 32, 16, 0.08);
+}
+.stat-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 54px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -1px;
+}
+.stat-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--text-muted);
+  margin-top: 6px;
+  font-weight: 500;
+}
+
+/* ── SUMMARY TABLE ────────────────────────────────────── */
+.summary {
+  margin-top: 32px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(44, 32, 16, 0.06);
+}
+.summary-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px;
+  font-weight: 400;
+  padding: 22px 26px 18px;
+  border-bottom: 1px solid var(--divider);
+  background: var(--navy);
+  color: var(--surface);
+  letter-spacing: -0.3px;
+}
+.summary-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.summary-table th {
+  text-align: left;
+  font-weight: 600;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--text-muted);
+  padding: 9px 18px;
+  border-bottom: 1px solid var(--divider);
+  background: var(--data-bg);
+}
+.summary-table td {
+  padding: 10px 18px;
+  border-bottom: 1px solid var(--divider);
+  vertical-align: middle;
+}
+.summary-table tr:last-child td { border-bottom: none; }
+.mode-badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 9px;
+  border-radius: 20px;
+}
+.mode-badge.bike   { background: var(--accent-bike);   color: #fff; }
+.mode-badge.train  { background: var(--accent-train);  color: #fff; }
+.mode-badge.flight { background: var(--accent-flight); color: #fff; }
+
+/* ── RESPONSIVE ───────────────────────────────────────── */
+@media (max-width: 600px) {
+  body { padding: 28px 18px 64px; }
+  h1 { font-size: 38px; }
+  .stay { padding: 20px 22px; }
+  .stay-name { font-size: 30px; }
+  .stat-number { font-size: 40px; }
+  .stay-header { flex-direction: column; gap: 4px; }
+  .stay-dates { text-align: left; }
+  .stats { grid-template-columns: 1fr; }
+  .data-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ── EMBEDDED MAP ─────────────────────────────────────── */
+.map-section {
+  position: relative;
+  width: 100%;
+  height: 460px;
+  border-radius: 14px;
+  overflow: hidden;
+  margin-top: 32px;
+  border: 1px solid var(--border);
+  box-shadow: 0 2px 10px rgba(44, 32, 16, 0.06);
+}
+#trip-map { height: 100%; width: 100%; }
+
+.map-section .map-overlay-title {
+  position: absolute;
+  top: 14px; left: 14px;
+  z-index: 1000;
+  background: rgba(251, 248, 242, 0.95);
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  padding: 10px 14px;
+  pointer-events: none;
+  box-shadow: 0 2px 8px rgba(44, 32, 16, 0.08);
+}
+.map-section .map-overlay-title .mot-heading {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--text);
+  line-height: 1.2;
+}
+.map-section .map-overlay-title .mot-sub {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+.map-section .map-overlay-legend {
+  position: absolute;
+  bottom: 28px; left: 14px;
+  z-index: 1000;
+  background: rgba(251, 248, 242, 0.95);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 14px;
+  pointer-events: none;
+  box-shadow: 0 2px 8px rgba(44, 32, 16, 0.08);
+}
+.map-section .map-legend-row {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 12px; font-weight: 500; color: var(--text-muted);
+  margin-bottom: 6px;
+}
+.map-section .map-legend-row:last-child { margin-bottom: 0; }
+.map-section .map-legend-line {
+  width: 28px; height: 3px;
+  border-radius: 2px; flex-shrink: 0;
+}
+.map-section .map-legend-line.bike  { background: var(--accent-bike); }
+.map-section .map-legend-line.train {
+  background: none;
+  border-top: 3px dashed var(--accent-train);
+  height: 0;
+}
+
+/* Map lodging pins */
+.lodging-pin {
+  width: 22px; height: 22px;
+  border-radius: 5px;
+  background: var(--gold-bg);
+  border: 2px solid var(--gold);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px;
+  box-shadow: 0 2px 6px rgba(44, 32, 16, 0.20);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+.lodging-pin:hover { transform: scale(1.2); }
+
+/* Map layer toggle button */
+#map-layer-toggle {
+  position: absolute;
+  top: 14px; right: 14px;
+  z-index: 1000;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  background: rgba(251, 248, 242, 0.95);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 6px 14px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(44, 32, 16, 0.08);
+  transition: border-color 0.15s, color 0.15s;
+}
+#map-layer-toggle:hover {
+  border-color: var(--gold-border);
+  color: var(--text);
+}
+
+/* Map stop pins */
+.stop-pin {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 2.5px solid;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px; font-weight: 600;
+  box-shadow: 0 2px 8px rgba(44, 32, 16, 0.18);
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+.stop-pin:hover { transform: scale(1.15); }
+.stop-pin.start { border-color: var(--gold);         color: var(--gold); }
+.stop-pin.bike  { border-color: var(--accent-bike);  color: var(--accent-bike); }
+.stop-pin.train { border-color: var(--accent-train); color: var(--accent-train); }
+
+/* Map hover tooltips */
+.leaflet-tooltip.stop-tip {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  box-shadow: 0 4px 18px rgba(44, 32, 16, 0.11);
+  min-width: 190px;
+  pointer-events: none;
+}
+.leaflet-tooltip.stop-tip::before { display: none; }
+.stop-tip .tip-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 19px;
+  font-weight: 400;
+  color: var(--text);
+  letter-spacing: -0.2px;
+  line-height: 1.2;
+}
+.stop-tip .tip-meta {
+  display: flex; gap: 8px; align-items: center; margin-top: 4px;
+}
+.stop-tip .tip-dates { font-size: 12px; color: var(--text-muted); font-weight: 500; }
+.stop-tip .tip-nights {
+  font-size: 10px;
+  font-weight: 600;
+  background: var(--gold-bg);
+  color: var(--gold);
+  border: 1px solid var(--gold-border);
+  padding: 2px 8px;
+  border-radius: 20px;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+}
+.stop-tip .tip-desc {
+  font-size: 12px; color: var(--text-muted);
+  line-height: 1.5; margin-top: 7px; padding-top: 7px;
+  border-top: 1px solid var(--divider);
+}
+.stop-tip .tip-mode {
+  font-size: 11px; font-weight: 600;
+  margin-top: 6px; padding: 3px 9px;
+  border-radius: 20px; display: inline-block;
+}
+.stop-tip .tip-mode.bike  { background: var(--accent-bike);  color: #fff; }
+.stop-tip .tip-mode.train { background: var(--accent-train); color: #fff; }
+.stop-tip .tip-mode.start { background: var(--gold);         color: #fff; }
+
+@media (max-width: 600px) {
+  .map-section { height: 320px; }
+}
+
+/* ── TRIP OVERVIEW ────────────────────────────────────── */
+.trip-overview {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 22px 20px 20px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 12px rgba(44,32,16,0.07);
+}
+.overview-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 22px;
+}
+@media (max-width: 600px) {
+  .overview-stats { grid-template-columns: repeat(2, 1fr); }
+}
+.stat-item {
+  background: var(--bg);
+  border-radius: 10px;
+  padding: 12px 8px;
+  text-align: center;
+}
+.stat-val {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px;
+  color: var(--text);
+  line-height: 1;
+}
+.stat-lbl {
+  font-size: 10px;
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 4px;
+}
+/* Route grid */
+.route-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 7px;
+  margin-bottom: 18px;
+}
+@media (max-width: 600px) {
+  .route-grid { grid-template-columns: repeat(2, 1fr); }
+}
+.r-tile {
+  display: block;
+  background: var(--bg);
+  border-radius: 10px;
+  padding: 10px 10px 9px;
+  text-decoration: none;
+  color: var(--text);
+  border: 1px solid transparent;
+  transition: background 0.15s, transform 0.12s, box-shadow 0.12s;
+}
+.r-tile:hover {
+  background: var(--data-bg);
+  border-color: var(--border);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(44,32,16,0.1);
+}
+.r-tile-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 4px;
+}
+.r-tile-num {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  color: var(--text-light);
+}
+.r-tile-mode { font-size: 11px; line-height: 1; }
+.r-tile-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.2;
+}
+.r-tile-dates {
+  font-size: 10px;
+  color: var(--text-muted);
+  margin-top: 3px;
+}
+.r-tile-nights {
+  font-size: 9px;
+  font-weight: 700;
+  color: var(--gold);
+  margin-top: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+.overview-links {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 14px;
+  border-top: 1px solid var(--divider);
+}
+.overview-links-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.overview-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  border-radius: 999px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+  text-decoration: none;
+  transition: background 0.15s, border-color 0.15s, transform 0.12s, box-shadow 0.12s;
+}
+.overview-link:hover {
+  background: var(--data-bg);
+  border-color: var(--gold-border);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(44,32,16,0.08);
+}
+.overview-link-icon {
+  font-size: 13px;
+  line-height: 1;
+}
+.overview-link-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+}
+.overview-link-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.2;
+}
+.overview-link-subtitle {
+  font-size: 10px;
+  color: var(--text-muted);
+  line-height: 1.2;
+}
+@media (max-width: 600px) {
+  .overview-links {
+    justify-content: flex-start;
+  }
+  .overview-links-row {
+    width: 100%;
+    justify-content: flex-start;
+  }
+  .overview-link {
+    flex: 1 1 180px;
+  }
+}
+
+/* ── WIKIPEDIA BUTTON ─────────────────────────────────── */
+.wiki-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 11px 14px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: left;
+  margin-top: 14px;
+  transition: background 0.15s, border-color 0.15s;
+  font-family: 'DM Sans', sans-serif;
+}
+.wiki-btn:hover {
+  background: var(--data-bg);
+  border-color: var(--gold-border);
+}
+.wiki-btn-icon {
+  width: 28px;
+  height: 28px;
+  background: #000;
+  color: #fff;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  font-weight: 700;
+  font-family: 'Linux Libertine', 'Georgia', serif;
+  flex-shrink: 0;
+  letter-spacing: -1px;
+}
+.wiki-btn-body { flex: 1; }
+.wiki-btn-label {
+  font-size: 10px;
+  color: var(--text-light);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.wiki-btn-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  margin-top: 1px;
+}
+.wiki-btn-arrow {
+  font-size: 16px;
+  color: var(--text-light);
+}
+
+/* ── WIKIPEDIA OVERLAY ────────────────────────────────── */
+#wiki-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.72);
+  z-index: 9998;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 24px 16px;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  overflow-y: auto;
+  animation: lb-in 0.18s ease;
+}
+#wiki-overlay.active { display: flex; }
+#wiki-panel {
+  background: var(--surface);
+  border-radius: 16px;
+  width: 100%;
+  max-width: 760px;
+  margin: auto;
+  overflow: hidden;
+  box-shadow: 0 12px 48px rgba(0,0,0,0.3);
+  animation: lb-img-in 0.2s ease;
+}
+#wiki-panel-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--divider);
+}
+#wiki-panel-head .wiki-btn-icon { width: 24px; height: 24px; font-size: 14px; }
+#wiki-panel-title {
+  flex: 1;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+}
+#wiki-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0 2px;
+  line-height: 1;
+  transition: color 0.15s;
+}
+#wiki-close:hover { color: var(--text); }
+#wiki-body {
+  padding: 20px;
+  max-height: 72vh;
+  overflow-y: auto;
+}
+.wiki-loading {
+  text-align: center;
+  color: var(--text-light);
+  padding: 40px 20px;
+  font-size: 14px;
+}
+.wiki-thumb {
+  float: right;
+  max-width: 180px;
+  border-radius: 8px;
+  margin: 0 0 14px 16px;
+  display: block;
+}
+.wiki-extract { font-size: 14px; line-height: 1.75; color: var(--text); }
+.wiki-extract p { margin-bottom: 12px; }
+.wiki-meta {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--text-light);
+  margin-bottom: 14px;
+}
+.wiki-source-link {
+  display: inline-block;
+  margin-top: 18px;
+  font-size: 12px;
+  color: var(--accent-train);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 1px;
+  clear: both;
+}
+.wiki-source-link:hover { border-bottom-color: var(--accent-train); }
+
+/* ── COLLAPSIBLE STAY CARDS ──────────────────────────── */
+.stay-header {
+  cursor: pointer;
+  user-select: none;
+}
+.stay::before {
+  content: '›';
+  position: absolute;
+  left: 10px;
+  top: 24px;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--gold);
+  transform: rotate(90deg);
+  transition: transform 0.25s ease;
+  line-height: 1;
+}
+.stay.collapsed::before {
+  transform: rotate(0deg);
+}
+.stay-body {
+  overflow: hidden;
+  max-height: 3000px;
+  opacity: 1;
+  transition: max-height 0.4s ease, opacity 0.25s ease;
+}
+.stay.collapsed .stay-body {
+  max-height: 0;
+  opacity: 0;
+}
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>Japan &middot; April&ndash;May 2026</h1>
+  <p class="subtitle">Sam & Jess &middot; 26 nights &middot; 10 stops &middot; Own bikes in rinko bags</p>
+  <div class="header-actions">
+    <button id="toggle-all-btn">Collapse all</button>
+  </div>
+</div>
+
+<!-- TRIP OVERVIEW -->
+<div class="trip-overview">
+  <div class="overview-stats">
+    <div class="stat-item"><div class="stat-val">26</div><div class="stat-lbl">Nights</div></div>
+    <div class="stat-item"><div class="stat-val">10</div><div class="stat-lbl">Stops</div></div>
+    <div class="stat-item"><div class="stat-val">~275 km</div><div class="stat-lbl">Cycled</div></div>
+    <div class="stat-item"><div class="stat-val">Apr–May</div><div class="stat-lbl">2026</div></div>
+  </div>
+  <div class="route-grid">
+    <a class="r-tile" href="#stop-01"><div class="r-tile-top"><div class="r-tile-num">01</div><div class="r-tile-mode">✈️</div></div><div class="r-tile-name">Osaka</div><div class="r-tile-dates">Apr 18–21</div><div class="r-tile-nights">3 nights</div></a>
+    <a class="r-tile" href="#stop-02"><div class="r-tile-top"><div class="r-tile-num">02</div><div class="r-tile-mode">🚲</div></div><div class="r-tile-name">Kyoto</div><div class="r-tile-dates">Apr 21–24</div><div class="r-tile-nights">3 nights</div></a>
+    <a class="r-tile" href="#stop-03"><div class="r-tile-top"><div class="r-tile-num">03</div><div class="r-tile-mode">🚂</div></div><div class="r-tile-name">Onomichi</div><div class="r-tile-dates">Apr 24–26</div><div class="r-tile-nights">2 nights</div></a>
+    <a class="r-tile" href="#stop-04"><div class="r-tile-top"><div class="r-tile-num">04</div><div class="r-tile-mode">🚲</div></div><div class="r-tile-name">Ikuchijima</div><div class="r-tile-dates">Apr 26–28</div><div class="r-tile-nights">2 nights</div></a>
+    <a class="r-tile" href="#stop-05"><div class="r-tile-top"><div class="r-tile-num">05</div><div class="r-tile-mode">🚲</div></div><div class="r-tile-name">Imabari</div><div class="r-tile-dates">Apr 28–30</div><div class="r-tile-nights">2 nights</div></a>
+    <a class="r-tile" href="#stop-06"><div class="r-tile-top"><div class="r-tile-num">06</div><div class="r-tile-mode">🚲</div></div><div class="r-tile-name">Uchiko</div><div class="r-tile-dates">Apr 30–May 2</div><div class="r-tile-nights">2 nights</div></a>
+    <a class="r-tile" href="#stop-07"><div class="r-tile-top"><div class="r-tile-num">07</div><div class="r-tile-mode">🚲</div></div><div class="r-tile-name">Ozu</div><div class="r-tile-dates">May 2–4</div><div class="r-tile-nights">2 nights</div></a>
+    <a class="r-tile" href="#stop-08"><div class="r-tile-top"><div class="r-tile-num">08</div><div class="r-tile-mode">🚲</div></div><div class="r-tile-name">Matsuyama</div><div class="r-tile-dates">May 4–8</div><div class="r-tile-nights">4 nights</div></a>
+    <a class="r-tile" href="#stop-09"><div class="r-tile-top"><div class="r-tile-num">09</div><div class="r-tile-mode">🚂</div></div><div class="r-tile-name">Tokyo</div><div class="r-tile-dates">May 8–13</div><div class="r-tile-nights">5 nights</div></a>
+    <a class="r-tile" href="#stop-10"><div class="r-tile-top"><div class="r-tile-num">10</div><div class="r-tile-mode">🚂</div></div><div class="r-tile-name">Osaka ✈️</div><div class="r-tile-dates">May 13–14</div><div class="r-tile-nights">departure</div></a>
+  </div>
+  <div class="overview-links">
+    <div class="overview-links-row">
+      <a class="overview-link" href="#trip-map-section">
+        <span class="overview-link-icon">🗺️</span>
+        <span class="overview-link-text"><span class="overview-link-title">Map</span><span class="overview-link-subtitle">Route overview</span></span>
+      </a>
+      <a class="overview-link" href="#at-a-glance">
+        <span class="overview-link-icon">≡</span>
+        <span class="overview-link-text"><span class="overview-link-title">At a Glance</span><span class="overview-link-subtitle">Summary table</span></span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- 1. OSAKA -->
+<div class="stay" id="stop-01">
+  <div class="stay-header">
+    <div><div class="stay-number">01</div><div class="stay-name">Osaka</div></div>
+    <div class="stay-dates">Apr 18&ndash;21<br><span class="stay-nights">3 NIGHTS</span></div>
+  </div>
+  <div class="stay-body">
+  <div class="stay-trip-day">Trip days 1&ndash;3</div>
+  <div class="stay-vibe">Japan's anti-Tokyo: louder, funnier, cheaper, more honest about its obsession with food. Osaka calls itself "the Nation's Kitchen" &mdash; a title it's held since the Edo period when it was the country's rice-trading hub. The energy here is street-level: neon-drenched food alleys, comedians busking in Namba, takoyaki stands with queues around the block. It's chaotic in the best way, and a perfect intro to Japan.</div>
+  <div class="stay-photos">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/3/36/Dotonbori_at_night.JPG" alt="Dotonbori at night" loading="lazy">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/e/e4/Osaka_Castle_02bs3200.jpg" alt="Osaka Castle" loading="lazy">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/4/42/%E9%BB%92%E9%96%80%E5%B8%82%E5%A0%B4_2024%281%29.jpg" alt="Kuromon Market" loading="lazy">
+  </div>
+  <div class="data-grid">
+    <div class="data-item"><div class="data-label">Population</div><div class="data-value">2.79 million</div></div>
+    <div class="data-item"><div class="data-label">Density</div><div class="data-value">12,353/km&sup2;</div></div>
+    <div class="data-item"><div class="data-label">Founded</div><div class="data-value">1889 (city)</div></div>
+    <div class="data-item"><div class="data-label">Prefecture</div><div class="data-value">Osaka</div></div>
+    <div class="data-item"><div class="data-label">Known for</div><div class="data-value">Street food capital</div></div>
+    <div class="data-item"><div class="data-label">Avg. high (late Apr)</div><div class="data-value">21&deg;C / 70&deg;F</div></div>
+  </div>
+  <div class="highlights">
+    <div class="highlight-label">Don't miss</div>
+    <div class="highlight-list">
+      <span class="highlight-tag">Dotonbori neon strip</span>
+      <span class="highlight-tag">Shinsekai + Tsutenkaku Tower</span>
+      <span class="highlight-tag">Kuromon Market</span>
+      <span class="highlight-tag">Osaka Castle</span>
+      <span class="highlight-tag">Takoyaki + okonomiyaki crawl</span>
+    </div>
+  </div>
+  <div class="trivia">Osaka has more vending machines per capita than almost anywhere in the world, selling everything from lobster to umbrellas to hot ramen.</div>
+  <button class="wiki-btn" data-wiki="Osaka"><div class="wiki-btn-icon">W</div><div class="wiki-btn-body"><div class="wiki-btn-label">Wikipedia</div><div class="wiki-btn-title">Osaka</div></div><div class="wiki-btn-arrow">›</div></button>
+  <div class="stay-links">
+    <a class="stay-link" href="https://osaka-info.jp/en/" target="_blank">Osaka Tourism</a>
+    <a class="stay-link" href="https://www.japan-guide.com/e/e4001.html" target="_blank">Japan Guide &mdash; Osaka</a>
+    <a class="stay-link" href="https://www.japan-guide.com/e/e2060.html" target="_blank">Dotonbori &amp; Namba</a>
+    <a class="stay-link" href="https://www.osakacastle.net/english/" target="_blank">Osaka Castle</a>
+    <a class="stay-link" href="https://www.kuromon.com/en/" target="_blank">Kuromon Market</a>
+  </div>
+  <div class="lodging">
+    <div>
+      <div class="lodging-label">&#x1f3e0; Where we're staying</div>
+      <div class="lodging-name">BIO_001 &mdash; The Design Studio Room</div>
+      <div class="lodging-meta">Kita Ward &middot; Renovated historic townhouse &middot; &#11088; 4.96 (303 reviews)</div>
+      <div class="lodging-desc">Part of a five-room collection in a carefully restored wooden townhouse in central Osaka, blending traditional architecture with seismic-reinforced, well-insulated modern comforts.</div>
+    </div>
+    <a class="lodging-link" href="https://www.airbnb.ca/rooms/26993227" target="_blank">View on Airbnb &rarr;</a>
+  </div>
+  </div>
+</div>
+
+<div class="relocation">
+  <div class="relocation-icon bike">&#x1f6b2;</div>
+  <div class="relocation-body">
+    <div class="relocation-title bike">Cycle to Kyoto</div>
+    <div class="relocation-route">Osaka &rarr; Kyoto via Yodogawa River path</div>
+    <div class="relocation-details">
+      <span class="detail-chip bike">~50 km</span>
+      <span class="detail-chip bike">3&ndash;4 hours</span>
+      <span class="detail-chip bike">Flat, dedicated bike path</span>
+    </div>
+    <div class="relocation-steps">Follow the Yodo River cycling path north &mdash; traffic-free, well-marked. Some anti-motorcycle barriers require slowing. Option to detour via Arashiyama to enter Kyoto from the west (+15 km).</div>
+  </div>
+</div>
+
+<!-- 2. KYOTO -->
+<div class="stay" id="stop-02">
+  <div class="stay-header">
+    <div><div class="stay-number">02</div><div class="stay-name">Kyoto</div></div>
+    <div class="stay-dates">Apr 21&ndash;25<br><span class="stay-nights">4 NIGHTS</span></div>
+  </div>
+  <div class="stay-body">
+  <div class="stay-trip-day">Trip days 4&ndash;7</div>
+  <div class="stay-vibe">A thousand years of imperial history in a grid-pattern city framed by forested mountains on three sides. Kyoto is temples, tea, geisha, bamboo, and an almost absurd density of cultural heritage &mdash; 20% of Japan's national treasures are here, in a city with just 1% of its population. But it's also Nintendo's headquarters, a strong coffee scene, and backstreet izakayas where the food is extraordinary.</div>
+  <div class="stay-photos">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Fushimi-Inari_Torii.jpg" alt="Fushimi Inari torii gates" loading="lazy">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/2/26/Gion_Alley_at_Night.jpg" alt="Gion alley at night" loading="lazy">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/9/97/2021_Sagano_Bamboo_forest_in_Arashiyama%2C_Kyoto%2C_Japan.jpg" alt="Arashiyama bamboo grove" loading="lazy">
+  </div>
+  <div class="data-grid">
+    <div class="data-item"><div class="data-label">Population</div><div class="data-value">~1.43 million</div></div>
+    <div class="data-item"><div class="data-label">Area</div><div class="data-value">828 km&sup2;</div></div>
+    <div class="data-item"><div class="data-label">Founded</div><div class="data-value">794 AD</div></div>
+    <div class="data-item"><div class="data-label">Temples & Shrines</div><div class="data-value">~2,000</div></div>
+    <div class="data-item"><div class="data-label">UNESCO sites</div><div class="data-value">17</div></div>
+    <div class="data-item"><div class="data-label">Imperial capital for</div><div class="data-value">1,074 years</div></div>
+  </div>
+  <div class="highlights">
+    <div class="highlight-label">Don't miss</div>
+    <div class="highlight-list">
+      <span class="highlight-tag">Fushimi Inari (10,000 torii gates)</span>
+      <span class="highlight-tag">Arashiyama bamboo grove</span>
+      <span class="highlight-tag">Kinkaku-ji (Golden Pavilion)</span>
+      <span class="highlight-tag">Gion district at dusk</span>
+      <span class="highlight-tag">Nishiki Market</span>
+    </div>
+  </div>
+  <div class="trivia">Kyoto was spared from firebombing in WWII partly due to the intervention of an American scholar who argued its cultural significance was irreplaceable. It had actually been on the original target list for the atomic bomb.</div>
+  <button class="wiki-btn" data-wiki="Kyoto"><div class="wiki-btn-icon">W</div><div class="wiki-btn-body"><div class="wiki-btn-label">Wikipedia</div><div class="wiki-btn-title">Kyoto</div></div><div class="wiki-btn-arrow">›</div></button>
+  <div class="stay-links">
+    <a class="stay-link" href="https://kyoto.travel/en" target="_blank">Kyoto Tourism</a>
+    <a class="stay-link" href="https://www.japan-guide.com/e/e2158.html" target="_blank">Japan Guide &mdash; Kyoto</a>
+    <a class="stay-link" href="https://inari.jp/en/" target="_blank">Fushimi Inari Taisha</a>
+    <a class="stay-link" href="https://www.japan-guide.com/e/e3951.html" target="_blank">Arashiyama &amp; Bamboo Grove</a>
+    <a class="stay-link" href="https://www.kyoto-nishiki.or.jp/" target="_blank">Nishiki Market</a>
+  </div>
+  <div class="lodging">
+    <div>
+      <div class="lodging-label">&#x1f3e0; Where we're staying</div>
+      <div class="lodging-name">&ldquo;Hotei-an&rdquo; Machiya House</div>
+      <div class="lodging-meta">Higashiyama-ku &middot; Traditional machiya &middot; &#11088; 4.79 (163 reviews)</div>
+      <div class="lodging-desc">A restored machiya townhouse named after the deity of good luck, with seven enshrined statues and a serene Zen atmosphere. Minutes from Fushimi Inari, and one of the most culturally rich parts of the city.</div>
+    </div>
+    <a class="lodging-link" href="https://www.airbnb.ca/rooms/21374794" target="_blank">View on Airbnb &rarr;</a>
+  </div>
+  </div>
+</div>
+
+<div class="relocation">
+  <div class="relocation-icon train">&#x1f685;</div>
+  <div class="relocation-body">
+    <div class="relocation-title train">Train to Onomichi</div>
+    <div class="relocation-route">Kyoto &rarr; Fukuyama &rarr; Onomichi</div>
+    <div class="relocation-details">
+      <span class="detail-chip train">~1 hr 45 min</span>
+      <span class="detail-chip train">1 transfer at Fukuyama</span>
+      <span class="detail-chip train">~&yen;8,500/person</span>
+    </div>
+    <div class="relocation-steps"><strong>Leg 1:</strong> Kyoto &rarr; Fukuyama (Sanyo Shinkansen, 1 hr 10 min)<br><strong>Leg 2:</strong> Fukuyama &rarr; Onomichi (JR Sanyo Line local, 20 min)</div>
+  </div>
+</div>
+
+<!-- 3. ONOMICHI -->
+<div class="stay" id="stop-03">
+  <div class="stay-header">
+    <div><div class="stay-number">03</div><div class="stay-name">Onomichi</div></div>
+    <div class="stay-dates">Apr 25&ndash;28<br><span class="stay-nights">3 NIGHTS</span></div>
+  </div>
+  <div class="stay-body">
+  <div class="stay-trip-day">Trip days 8&ndash;10 &middot; Cumulative cycling: 50 km</div>
+  <div class="stay-vibe">A port town built on slopes so steep that cars can't reach most of its temples. Onomichi is all narrow alleys, stray cats sunbathing on stone walls, and hillside views over the Seto Inland Sea. It has a literary history &mdash; the setting of Ozu's 1953 film <em>Tokyo Story</em> &mdash; and today young creatives have moved in, turning abandoned hillside houses into cafes and galleries. Also famous for its soy-sauce-and-pork-fat ramen.</div>
+  <div class="stay-photos">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/7/75/Onomichi_Panorama.jpg" alt="Onomichi panorama" loading="lazy">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/7/76/Onomichi_city_center_area_Aerial_photograph.2010.jpg" alt="Onomichi harbour aerial" loading="lazy">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/69/Higashigoshocho%2C_Onomichi%2C_Hiroshima_Prefecture_722-0036%2C_Japan_-_panoramio.jpg" alt="Onomichi street" loading="lazy">
+  </div>
+  <div class="data-grid">
+    <div class="data-item"><div class="data-label">Population</div><div class="data-value">~129,000</div></div>
+    <div class="data-item"><div class="data-label">Area</div><div class="data-value">285 km&sup2;</div></div>
+    <div class="data-item"><div class="data-label">Port opened</div><div class="data-value">1168 AD</div></div>
+    <div class="data-item"><div class="data-label">Temples</div><div class="data-value">25+ (on Temple Walk)</div></div>
+    <div class="data-item"><div class="data-label">Prefecture</div><div class="data-value">Hiroshima</div></div>
+    <div class="data-item"><div class="data-label">Famous export</div><div class="data-value">Onomichi ramen</div></div>
+  </div>
+  <div class="highlights">
+    <div class="highlight-label">Don't miss</div>
+    <div class="highlight-list">
+      <span class="highlight-tag">Senko-ji Temple + ropeway</span>
+      <span class="highlight-tag">Cat Alley (Neko no Hosomichi)</span>
+      <span class="highlight-tag">Temple Walk (2.5 km, 25 temples)</span>
+      <span class="highlight-tag">Onomichi U2 (cycling hotel)</span>
+      <span class="highlight-tag">Onomichi ramen</span>
+    </div>
+  </div>
+  <div class="trivia">Cat Alley is lined with hundreds of "fukuishi-neko" &mdash; lucky stones painted to look like cats by local artist Shunji Sonoyama, who also runs a 3,000-piece maneki-neko collection nearby. The cats' historical role? Rodent control at the port.</div>
+  <button class="wiki-btn" data-wiki="Onomichi"><div class="wiki-btn-icon">W</div><div class="wiki-btn-body"><div class="wiki-btn-label">Wikipedia</div><div class="wiki-btn-title">Onomichi</div></div><div class="wiki-btn-arrow">›</div></button>
+  <div class="stay-links">
+    <a class="stay-link" href="https://www.onomichiguide.com/" target="_blank">Onomichi Guide</a>
+    <a class="stay-link" href="https://visitshimanami.com/" target="_blank">Visit Shimanami</a>
+    <a class="stay-link" href="https://www.onomichi-u2.com/en/" target="_blank">Hotel Cycle (U2)</a>
+    <a class="stay-link" href="https://www.japan-guide.com/e/e3481.html" target="_blank">Japan Guide &mdash; Onomichi</a>
+    <a class="stay-link" href="https://www.onomichi-ramen.com/" target="_blank">Onomichi Ramen</a>
+  </div>
+  <div class="lodging">
+    <div>
+      <div class="lodging-label">&#x1f3e0; Where we're staying</div>
+      <div class="lodging-name">Hidden Inn at the End of the Road</div>
+      <div class="lodging-meta">Onomichi &middot; Renovated warehouse cottage &middot; &#11088; 4.96 (46 reviews)</div>
+      <div class="lodging-desc">A snug two-floor cottage tucked into the hillside in a renovated warehouse, with an 8-minute walk down to the harbour and shopping district. Compact but not cramped &mdash; very much in the Onomichi spirit.</div>
+    </div>
+    <a class="lodging-link" href="https://www.airbnb.ca/rooms/1011835570117402203" target="_blank">View on Airbnb &rarr;</a>
+  </div>
+  </div>
+</div>
+
+<div class="relocation">
+  <div class="relocation-icon bike">&#x1f6b2;</div>
+  <div class="relocation-body">
+    <div class="relocation-title bike">Shimanami Kaido &mdash; Day 1</div>
+    <div class="relocation-route">Onomichi &rarr; ferry &rarr; Mukaishima &rarr; Innoshima &rarr; Ikuchijima</div>
+    <div class="relocation-details">
+      <span class="detail-chip bike">~33 km</span>
+      <span class="detail-chip bike">3&ndash;4 hours</span>
+      <span class="detail-chip bike">2 bridges + 1 ferry</span>
+    </div>
+    <div class="relocation-steps">Ferry from Onomichi port to Mukaishima (~5 min, &yen;110). Follow the blue line. Cross Innoshima Bridge and Ikuchi Bridge. Mostly flat except ~40m bridge approaches.</div>
+  </div>
+</div>
+
+<!-- 4. IKUCHIJIMA -->
+<div class="stay" id="stop-04">
+  <div class="stay-header">
+    <div><div class="stay-number">04</div><div class="stay-name">Ikuchijima</div></div>
+    <div class="stay-dates">Apr 28&ndash;30<br><span class="stay-nights">2 NIGHTS</span></div>
+  </div>
+  <div class="stay-body">
+  <div class="stay-trip-day">Trip days 11&ndash;12 &middot; Cumulative cycling: 83 km</div>
+  <div class="stay-vibe">Japan's "Lemon Island" &mdash; a sun-drenched Seto Inland Sea island that produces more lemons than anywhere else in the country. The air smells like citrus, the light has a Mediterranean quality, and the pace is gloriously slow. The main town of Setoda has an old-fashioned shopping street (shotengai) that's come back to life with specialty coffee, gelato shops, and a ryokan by the founder of Aman resorts.</div>
+  <div class="stay-photos">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/c/cc/TataraOhashi.jpg" alt="Tatara Bridge, Shimanami Kaido" loading="lazy">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/5/5a/Ikutizima01.jpg" alt="Ikuchijima island" loading="lazy">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Shimanami_Kaido_5.jpg" alt="Shimanami Kaido cycling" loading="lazy">
+  </div>
+  <div class="data-grid">
+    <div class="data-item"><div class="data-label">Population</div><div class="data-value">~9,000</div></div>
+    <div class="data-item"><div class="data-label">Area</div><div class="data-value">31 km&sup2;</div></div>
+    <div class="data-item"><div class="data-label">Highest peak</div><div class="data-value">Mt. Kanno, 472m</div></div>
+    <div class="data-item"><div class="data-label">Famous for</div><div class="data-value">#1 lemon producer in Japan</div></div>
+    <div class="data-item"><div class="data-label">Lemon orchards</div><div class="data-value">600+</div></div>
+    <div class="data-item"><div class="data-label">Souvenir to buy</div><div class="data-value">Setoda lemon cake</div></div>
+  </div>
+  <div class="highlights">
+    <div class="highlight-label">Don't miss</div>
+    <div class="highlight-list">
+      <span class="highlight-tag">Kosanji Temple ("Buddhist theme park")</span>
+      <span class="highlight-tag">Hill of Hope (marble sculpture park)</span>
+      <span class="highlight-tag">Shimanami Dolce gelato</span>
+      <span class="highlight-tag">Setoda Sunset Beach</span>
+      <span class="highlight-tag">Lemon Valley orchards</span>
+    </div>
+  </div>
+  <div class="trivia">Donald Richie, the famous writer on Japan, described Ikuchijima as "a smaller Sardinia, a greener Corsica." Hiroshima Prefecture produces 60% of Japan's lemons, and Ikuchijima accounts for roughly half of that.</div>
+  <button class="wiki-btn" data-wiki="Ikuchijima"><div class="wiki-btn-icon">W</div><div class="wiki-btn-body"><div class="wiki-btn-label">Wikipedia</div><div class="wiki-btn-title">Ikuchijima</div></div><div class="wiki-btn-arrow">›</div></button>
+  <div class="stay-links">
+    <a class="stay-link" href="https://setouchifinder.com/en/detail/594" target="_blank">Ikuchijima Island Guide</a>
+    <a class="stay-link" href="https://shimanami-cycle.or.jp/cycling/en-02.html" target="_blank">Shimanami Cycling</a>
+    <a class="stay-link" href="https://www.kousanji.or.jp/" target="_blank">Kosanji Temple</a>
+    <a class="stay-link" href="https://en.visitshimanami.com/" target="_blank">Shimanami Kaido EN</a>
+    <a class="stay-link" href="https://visithiroshima.net/" target="_blank">Visit Hiroshima</a>
+  </div>
+  <div class="lodging">
+    <div>
+      <div class="lodging-label">&#x1f3e0; Where we're staying</div>
+      <div class="lodging-name">Agrit Island Time</div>
+      <div class="lodging-meta">1 min to Sunset Beach &middot; New cypress cottage &middot; &#11088; 5.0 (5 reviews)</div>
+      <div class="lodging-desc">A brand-new (2023) 50 m&sup2; cottage with fragrant cypress interiors, a private vegetable garden, and one minute&rsquo;s walk to the beach. A good place to decompress after day one of the Shimanami Kaido.</div>
+    </div>
+    <a class="lodging-link" href="https://www.airbnb.ca/rooms/1381484960398624350" target="_blank">View on Airbnb &rarr;</a>
+  </div>
+  </div>
+</div>
+
+<div class="relocation">
+  <div class="relocation-icon bike">&#x1f6b2;</div>
+  <div class="relocation-body">
+    <div class="relocation-title bike">Shimanami Kaido &mdash; Day 2</div>
+    <div class="relocation-route">Ikuchijima &rarr; Omishima &rarr; Hakatajima &rarr; Oshima &rarr; Imabari</div>
+    <div class="relocation-details">
+      <span class="detail-chip bike">~42 km</span>
+      <span class="detail-chip bike">4&ndash;5 hours</span>
+      <span class="detail-chip bike">4 bridges</span>
+    </div>
+    <div class="relocation-steps"><strong>Highlights:</strong> Oyamazumi Shrine on Omishima, salt ice cream on Hakatajima. <strong>Finish:</strong> Kurushima Kaikyo Bridge &mdash; 4 km long, 65m above sea level. The world's first triple suspension bridge.</div>
+  </div>
+</div>
+
+<!-- 5. IMABARI -->
+<div class="stay" id="stop-05">
+  <div class="stay-header">
+    <div><div class="stay-number">05</div><div class="stay-name">Imabari</div></div>
+    <div class="stay-dates">Apr 30&ndash;May 2<br><span class="stay-nights">2 NIGHTS</span></div>
+  </div>
+  <div class="stay-body">
+  <div class="stay-trip-day">Trip days 13&ndash;14 &middot; Cumulative cycling: 125 km &middot; Shimanami Kaido complete!</div>
+  <div class="stay-vibe">A working shipbuilding and textile city on the Shikoku side of the Shimanami Kaido. Not a tourist town &mdash; that's part of the charm. Imabari's claim to fame is towels: it produces 60% of all towels made in Japan, an industry spanning 120+ years and nearly 200 factories. The towels are genuinely excellent (they must absorb water within 5 seconds to earn the Imabari brand), and they make a great souvenir.</div>
+  <div class="stay-photos">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a1/%E5%A4%9A%E3%80%85%E7%BE%85%E5%A4%A7%E6%A9%8B_-_panoramio.jpg" alt="Kurushima Kaikyo Bridge" loading="lazy">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/1/15/Imabari_Castle_01.JPG" alt="Imabari Castle" loading="lazy">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/5/56/Imabari_Castle_at_night.JPG" alt="Imabari Castle at night" loading="lazy">
+  </div>
+  <div class="data-grid">
+    <div class="data-item"><div class="data-label">Population</div><div class="data-value">~152,000</div></div>
+    <div class="data-item"><div class="data-label">Area</div><div class="data-value">468 km&sup2;</div></div>
+    <div class="data-item"><div class="data-label">Prefecture</div><div class="data-value">Ehime</div></div>
+    <div class="data-item"><div class="data-label">Famous for</div><div class="data-value">Towels (60% of Japan's)</div></div>
+    <div class="data-item"><div class="data-label">Towel factories</div><div class="data-value">~200</div></div>
+    <div class="data-item"><div class="data-label">Also known for</div><div class="data-value">Shipbuilding</div></div>
+  </div>
+  <div class="highlights">
+    <div class="highlight-label">Don't miss</div>
+    <div class="highlight-list">
+      <span class="highlight-tag">Imabari Towel Museum</span>
+      <span class="highlight-tag">Imabari Castle (one of 3 sea-moat castles)</span>
+      <span class="highlight-tag">Buy Imabari towels (look for the red/blue logo)</span>
+      <span class="highlight-tag">Yakitori (local style: iron plate, no skewers)</span>
+    </div>
+  </div>
+  <div class="trivia">Imabari's towel brand was saved from extinction by designer Kashiwa Sato in 2006. Production had dropped 80% due to cheap imports. The rescue strategy? Compete on perfection, not price. The iconic red-white-blue logo was born, and "Imabari Towel" became a national brand.</div>
+  <button class="wiki-btn" data-wiki="Imabari"><div class="wiki-btn-icon">W</div><div class="wiki-btn-body"><div class="wiki-btn-label">Wikipedia</div><div class="wiki-btn-title">Imabari</div></div><div class="wiki-btn-arrow">›</div></button>
+  <div class="stay-links">
+    <a class="stay-link" href="https://www.imabaritowel.jp/en" target="_blank">Imabari Towel Official</a>
+    <a class="stay-link" href="https://cycling-ehime.com/en/" target="_blank">Cycling Ehime</a>
+    <a class="stay-link" href="https://www.oomishimagu.jp/" target="_blank">&Omacr;yamazumi Shrine</a>
+    <a class="stay-link" href="https://www.japan-guide.com/e/e5505.html" target="_blank">Japan Guide &mdash; Imabari</a>
+    <a class="stay-link" href="https://en.visit-ehime.jp/" target="_blank">Visit Ehime</a>
+  </div>
+  <div class="lodging">
+    <div>
+      <div class="lodging-label">&#x1f3e0; Where we're staying</div>
+      <div class="lodging-name">Auberge Yugashira</div>
+      <div class="lodging-meta">Ōmishima island &middot; Seto Inland Sea views &middot; &#11088; 4.98 (189 reviews)</div>
+      <div class="lodging-desc">An intimate farm-stay inn on Ōmishima island that takes only one group at a time. Elevated position with window views over the Seto Inland Sea &mdash; a genuinely special stop in the middle of the Shimanami Kaido.</div>
+    </div>
+    <a class="lodging-link" href="https://www.airbnb.ca/rooms/49931059" target="_blank">View on Airbnb &rarr;</a>
+  </div>
+  </div>
+</div>
+
+<div class="relocation">
+  <div class="relocation-icon bike">&#x1f6b2;</div>
+  <div class="relocation-body">
+    <div class="relocation-title bike">Cycle to Uchiko</div>
+    <div class="relocation-route">Imabari &rarr; Uchiko via inland Ehime</div>
+    <div class="relocation-details">
+      <span class="detail-chip bike">~80 km</span>
+      <span class="detail-chip bike">Full day (6&ndash;7h)</span>
+      <span class="detail-chip bike">Hilly inland terrain</span>
+    </div>
+    <div class="relocation-steps">Head south from Imabari into the Ehime highlands. The route climbs through river valleys and forested hills before dropping into the Oda River basin. A demanding day with significant elevation gain &mdash; the payoff is arriving in Uchiko's historic district from the quiet north, with virtually no tourist traffic on the road.</div>
+  </div>
+</div>
+
+<!-- 6. UCHIKO -->
+<div class="stay" id="stop-06">
+  <div class="stay-header">
+    <div><div class="stay-number">06</div><div class="stay-name">Uchiko</div></div>
+    <div class="stay-dates">May 2&ndash;4<br><span class="stay-nights">2 NIGHTS</span></div>
+  </div>
+  <div class="stay-body">
+  <div class="stay-trip-day">Trip days 15&ndash;16 &middot; Cumulative cycling: 205 km</div>
+  <div class="stay-vibe">A pristine Edo/Meiji-era merchant town that made its fortune from wood wax and handmade paper. The Yokaichi Old Town district is one of the best-preserved historical streetscapes in Japan &mdash; white and yellow plaster warehouses, dark timber frames, stone-paved lanes. It feels like stepping into the 1890s, except there's a world-class kabuki theater around the corner.</div>
+  <div class="stay-photos">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/d/da/Yokaichi_Gokoku_01.JPG" alt="Yokaichi old townscape" loading="lazy">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Uchikoza_Main_Gate_1.jpg" alt="Uchiko-za theatre" loading="lazy">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/0/01/Yokaichi_Gokoku_Machinami_Preservation_Center.jpg" alt="Traditional merchant house" loading="lazy">
+  </div>
+  <div class="data-grid">
+    <div class="data-item"><div class="data-label">Population</div><div class="data-value">~15,000</div></div>
+    <div class="data-item"><div class="data-label">Prefecture</div><div class="data-value">Ehime</div></div>
+    <div class="data-item"><div class="data-label">Historic district</div><div class="data-value">Yokaichi-Gokoku (designated preservation area)</div></div>
+    <div class="data-item"><div class="data-label">Wealth source</div><div class="data-value">Wood wax (mokuro) + washi paper</div></div>
+    <div class="data-item"><div class="data-label">Souvenir</div><div class="data-value">Japanese wa-rosoku candles</div></div>
+    <div class="data-item"><div class="data-label">Avg. high (early May)</div><div class="data-value">22&deg;C / 72&deg;F</div></div>
+  </div>
+  <div class="highlights">
+    <div class="highlight-label">Don't miss</div>
+    <div class="highlight-list">
+      <span class="highlight-tag">Uchiko-za kabuki theater (1916, still active)</span>
+      <span class="highlight-tag">Kamihaga Residence (wax merchant mansion)</span>
+      <span class="highlight-tag">Museum of Commercial and Domestic Life</span>
+      <span class="highlight-tag">Handmade wa-rosoku candle workshops</span>
+    </div>
+  </div>
+  <div class="trivia">Uchiko-za's rotating stage and trap doors are still operated by hand using original Edo-period wooden pulley systems. Japan's revolving stage technology was later adopted by Western theaters.</div>
+  <button class="wiki-btn" data-wiki="Uchiko, Ehime"><div class="wiki-btn-icon">W</div><div class="wiki-btn-body"><div class="wiki-btn-label">Wikipedia</div><div class="wiki-btn-title">Uchiko</div></div><div class="wiki-btn-arrow">›</div></button>
+  <div class="stay-links">
+    <a class="stay-link" href="https://www.we-love-uchiko.jp/en/" target="_blank">We Love Uchiko</a>
+    <a class="stay-link" href="https://www.japan-guide.com/e/e5550.html" target="_blank">Japan Guide &mdash; Uchiko</a>
+    <a class="stay-link" href="https://uchikoza.jp/" target="_blank">Uchiko-za Theatre</a>
+    <a class="stay-link" href="https://omori-washi.com/" target="_blank">Omori Washi Paper</a>
+    <a class="stay-link" href="https://en.visit-ehime.jp/" target="_blank">Visit Ehime</a>
+  </div>
+  <div class="lodging">
+    <div>
+      <div class="lodging-label">&#x1f3e0; Where we're staying</div>
+      <div class="lodging-name">Sobadamari &mdash; National Cultural Property</div>
+      <div class="lodging-meta">Uchiko-cho &middot; Historic Showa-era wooden house &middot; &#11088; 4.86 (37 reviews)</div>
+      <div class="lodging-desc">A whole early Showa-era wooden house along an old country road, designated as a national cultural property. The Oda River runs along the back garden &mdash; completely quiet, completely in keeping with Uchiko&rsquo;s preserved character.</div>
+    </div>
+    <a class="lodging-link" href="https://www.airbnb.ca/rooms/732310672995310308" target="_blank">View on Airbnb &rarr;</a>
+  </div>
+  </div>
+</div>
+
+<div class="relocation">
+  <div class="relocation-icon bike">&#x1f6b2;</div>
+  <div class="relocation-body">
+    <div class="relocation-title bike">Short ride to Ozu</div>
+    <div class="relocation-route">Uchiko &rarr; Ozu along the Hiji River</div>
+    <div class="relocation-details">
+      <span class="detail-chip bike">~12 km</span>
+      <span class="detail-chip bike">45 min</span>
+      <span class="detail-chip bike">Flat, riverside</span>
+    </div>
+  </div>
+</div>
+
+<!-- 7. OZU -->
+<div class="stay" id="stop-07">
+  <div class="stay-header">
+    <div><div class="stay-number">07</div><div class="stay-name">Ozu</div></div>
+    <div class="stay-dates">May 4&ndash;6<br><span class="stay-nights">2 NIGHTS</span></div>
+  </div>
+  <div class="stay-body">
+  <div class="stay-trip-day">Trip days 17&ndash;18 &middot; Cumulative cycling: 217 km</div>
+  <div class="stay-vibe">Known as the "Little Kyoto of Iyo," Ozu is a castle town on the Hijikawa River that prospered through sericulture, lacquerware, and traditional papermaking. The old town has paved alleys lined with Edo and Meiji buildings &mdash; it's impossibly quiet and photogenic. Recently, a NIPPONIA heritage hotel project has turned vacant historic buildings into boutique stays, breathing new life into the town.</div>
+  <div class="stay-photos">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/b/bc/Ozu_Garyusanso_Garden_1.JPG" alt="Garyu Sanso garden" loading="lazy">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/e/ec/Ozu_Castle_01.JPG" alt="Ozu Castle" loading="lazy">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/e/e1/Ozu_Garyusanso_Garden_2.JPG" alt="Garyu Sanso villa" loading="lazy">
+  </div>
+  <div class="data-grid">
+    <div class="data-item"><div class="data-label">Population</div><div class="data-value">~40,000</div></div>
+    <div class="data-item"><div class="data-label">Prefecture</div><div class="data-value">Ehime</div></div>
+    <div class="data-item"><div class="data-label">Nickname</div><div class="data-value">"Little Kyoto of Iyo"</div></div>
+    <div class="data-item"><div class="data-label">Castle</div><div class="data-value">Ozu Castle (rebuilt 2004 using original methods)</div></div>
+    <div class="data-item"><div class="data-label">Historic industries</div><div class="data-value">Silk, lacquerware, paper</div></div>
+    <div class="data-item"><div class="data-label">Golden Week</div><div class="data-value">May 4&ndash;5 are holidays</div></div>
+  </div>
+  <div class="highlights">
+    <div class="highlight-label">Don't miss</div>
+    <div class="highlight-list">
+      <span class="highlight-tag">Garyu Sanso villa (thatched-roof riverside villa)</span>
+      <span class="highlight-tag">Ozu Castle</span>
+      <span class="highlight-tag">Pokopen Yokocho retro market</span>
+      <span class="highlight-tag">NIPPONIA Hotel stays</span>
+    </div>
+  </div>
+  <div class="trivia">Garyu Sanso was designed so that every room commands a view of the moon from a different angle. The villa partly sits on a living tree growing out of the hillside above the Hijikawa River.</div>
+  <button class="wiki-btn" data-wiki="Ōzu, Ehime"><div class="wiki-btn-icon">W</div><div class="wiki-btn-body"><div class="wiki-btn-label">Wikipedia</div><div class="wiki-btn-title">Ozu</div></div><div class="wiki-btn-arrow">›</div></button>
+  <div class="stay-links">
+    <a class="stay-link" href="https://visitozu.com/" target="_blank">Visit Ozu</a>
+    <a class="stay-link" href="https://www.japan-guide.com/e/e5560.html" target="_blank">Japan Guide &mdash; Ozu</a>
+    <a class="stay-link" href="https://www.garyusanso.jp/" target="_blank">Garyu Sanso Villa</a>
+    <a class="stay-link" href="https://nipponia-ozu.com/" target="_blank">NIPPONIA Hotel Ozu</a>
+    <a class="stay-link" href="https://en.visit-ehime.jp/" target="_blank">Visit Ehime</a>
+  </div>
+  <div class="lodging">
+    <div>
+      <div class="lodging-label">&#x1f3e0; Where we're staying</div>
+      <div class="lodging-name">Hotel Ota &mdash; Japanese Twin Room</div>
+      <div class="lodging-meta">Ozu station-front &middot; Traditional Japanese style &middot; &#11088; 5.0 (1 review)</div>
+      <div class="lodging-desc">A well-regarded station-front hotel with a traditional Japanese-style room, right in the centre of the castle town. Practical and comfortable after the short ride from Uchiko, with the old townscape on the doorstep.</div>
+    </div>
+    <a class="lodging-link" href="https://www.airbnb.ca/rooms/939459956988213154" target="_blank">View on Airbnb &rarr;</a>
+  </div>
+  </div>
+</div>
+
+<div class="relocation">
+  <div class="relocation-icon bike">&#x1f6b2;</div>
+  <div class="relocation-body">
+    <div class="relocation-title bike">Cycle to Matsuyama</div>
+    <div class="relocation-route">Ozu &rarr; Matsuyama via Hijikawa River valley</div>
+    <div class="relocation-details">
+      <span class="detail-chip bike">~55&ndash;60 km</span>
+      <span class="detail-chip bike">4&ndash;5 hours</span>
+      <span class="detail-chip bike">Mixed terrain, some hills</span>
+    </div>
+    <div class="relocation-steps">Follow the Hijikawa River downstream from Ozu, then cut north toward Matsuyama through gentle farmland and low hills. The terrain is mixed &mdash; flat river valley sections alternate with hillier stretches as you approach the city. A satisfying final cycling day before the long train north to Tokyo.</div>
+  </div>
+</div>
+
+<!-- 8. MATSUYAMA -->
+<div class="stay" id="stop-08">
+  <div class="stay-header">
+    <div><div class="stay-number">08</div><div class="stay-name">Matsuyama</div></div>
+    <div class="stay-dates">May 6&ndash;8<br><span class="stay-nights">2 NIGHTS</span></div>
+  </div>
+  <div class="stay-body">
+  <div class="stay-trip-day">Trip days 19&ndash;20 &middot; Cumulative cycling: 275 km</div>
+  <div class="stay-vibe">Shikoku's largest city and the last stop before Tokyo. Matsuyama wraps around a hilltop castle and extends out to Dogo Onsen &mdash; the oldest hot spring in Japan, with a 3,000-year history. The bathhouse directly inspired the one in Miyazaki's <em>Spirited Away</em>. The city also has a literary connection: Natsume Soseki set his novel <em>Botchan</em> here, and there's a replica steam train named after it.</div>
+  <div class="stay-photos">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/D%C5%8Dgo_Onsen.jpg" alt="Dogo Onsen" loading="lazy">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/d/d6/Matsuyama_Castle.jpg" alt="Matsuyama Castle" loading="lazy">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/e/ef/Matsuyama_Castle_Panorama_2.jpg" alt="Matsuyama cityscape" loading="lazy">
+  </div>
+  <div class="data-grid">
+    <div class="data-item"><div class="data-label">Population</div><div class="data-value">~507,000</div></div>
+    <div class="data-item"><div class="data-label">Prefecture</div><div class="data-value">Ehime (capital)</div></div>
+    <div class="data-item"><div class="data-label">Dogo Onsen age</div><div class="data-value">~3,000 years</div></div>
+    <div class="data-item"><div class="data-label">Visitors/year (Dogo)</div><div class="data-value">~800,000</div></div>
+    <div class="data-item"><div class="data-label">Famous product</div><div class="data-value">Mikan (mandarin oranges)</div></div>
+    <div class="data-item"><div class="data-label">Castle</div><div class="data-value">Original (one of 12 in Japan)</div></div>
+  </div>
+  <div class="highlights">
+    <div class="highlight-label">Don't miss</div>
+    <div class="highlight-list">
+      <span class="highlight-tag">Dogo Onsen Honkan (1894 bathhouse)</span>
+      <span class="highlight-tag">Matsuyama Castle (hilltop, original keep)</span>
+      <span class="highlight-tag">Botchan Train (replica steam locomotive)</span>
+      <span class="highlight-tag">Okaido covered shopping arcade</span>
+      <span class="highlight-tag">Mikan juice tap (yes, it exists)</span>
+    </div>
+  </div>
+  <div class="trivia">Ehime Prefecture is Japan's largest citrus-growing region. At the Okaido shopping arcade in Matsuyama, there's a tap that dispenses mandarin orange juice instead of water. It costs &yen;100 for a cup.</div>
+  <button class="wiki-btn" data-wiki="Matsuyama, Ehime"><div class="wiki-btn-icon">W</div><div class="wiki-btn-body"><div class="wiki-btn-label">Wikipedia</div><div class="wiki-btn-title">Matsuyama</div></div><div class="wiki-btn-arrow">›</div></button>
+  <div class="stay-links">
+    <a class="stay-link" href="https://en.matsuyama-sightseeing.com/" target="_blank">Matsuyama Tourism</a>
+    <a class="stay-link" href="https://dogo.jp/" target="_blank">Dogo Onsen Official</a>
+    <a class="stay-link" href="https://www.matsuyamajo.jp/" target="_blank">Matsuyama Castle</a>
+    <a class="stay-link" href="https://www.iyotetsu.co.jp/botchan/" target="_blank">Botchan Train</a>
+    <a class="stay-link" href="https://www.japan-guide.com/e/e5500.html" target="_blank">Japan Guide &mdash; Matsuyama</a>
+  </div>
+  <div class="lodging">
+    <div>
+      <div class="lodging-label">&#x1f3e0; Where we're staying</div>
+      <div class="lodging-name">Inn in the Best Location in Matsuyama</div>
+      <div class="lodging-meta">Central Matsuyama &middot; Top-floor apartment &middot; &#11088; 4.97 (179 reviews)</div>
+      <div class="lodging-desc">A top-floor apartment in the heart of the city, within easy reach of Matsuyama Castle, Dogo Onsen, and a local historic public bath. Private kitchen, bath, and toilet &mdash; all the amenities for the final cycling recovery day.</div>
+    </div>
+    <a class="lodging-link" href="https://www.airbnb.ca/rooms/12682829" target="_blank">View on Airbnb &rarr;</a>
+  </div>
+  </div>
+</div>
+
+<div class="relocation">
+  <div class="relocation-icon train">&#x1f685;</div>
+  <div class="relocation-body">
+    <div class="relocation-title train">Long train to Tokyo &mdash; full day</div>
+    <div class="relocation-route">Matsuyama &rarr; Okayama &rarr; Tokyo</div>
+    <div class="relocation-details">
+      <span class="detail-chip train">~6.5 hours</span>
+      <span class="detail-chip train">1 transfer at Okayama</span>
+      <span class="detail-chip train">~&yen;19,000&ndash;22,000/person</span>
+    </div>
+    <div class="relocation-steps"><strong>Leg 1:</strong> Matsuyama &rarr; Okayama (JR Shiokaze limited express, 2 hr 40 min)<br><strong>Leg 2:</strong> Okayama &rarr; Tokyo (Shinkansen, 3 hr 15 min)</div>
+    <div class="relocation-note">Big travel day. Leave morning, arrive mid-afternoon. Book oversized luggage seats on shinkansen for bike bags.</div>
+  </div>
+</div>
+
+<!-- 9. TOKYO -->
+<div class="stay" id="stop-09">
+  <div class="stay-header">
+    <div><div class="stay-number">09</div><div class="stay-name">Tokyo</div></div>
+    <div class="stay-dates">May 8&ndash;13<br><span class="stay-nights">5 NIGHTS</span></div>
+  </div>
+  <div class="stay-body">
+  <div class="stay-trip-day">Trip days 21&ndash;25</div>
+  <div class="stay-vibe">The biggest possible gear-shift: from cycling through Shikoku rice paddies to the largest metropolitan area on earth. Every neighbourhood is its own world &mdash; Shimokitazawa for vintage shops, Yanaka for old-Tokyo temple streets, Daikanyama for design bookshops, Roppongi for museums. For a design-minded person, this is the motherlode: Tadao Ando buildings, Issey Miyake's museum, teamLab's immersive worlds, and more independent galleries than you could visit in a month.</div>
+  <div class="stay-photos">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/5/59/Shimokitazawa_Street_2015.jpg" alt="Shimokitazawa street" loading="lazy">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/7/71/Cityscape_in_Shinjuku_2021-07-18_01.jpg" alt="Shinjuku cityscape" loading="lazy">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/9/9d/Shinjuku_Gyoen_National_Garden_-_sakura_3.JPG" alt="Shinjuku Gyoen" loading="lazy">
+  </div>
+  <div class="data-grid">
+    <div class="data-item"><div class="data-label">Population (metro)</div><div class="data-value">~37 million</div></div>
+    <div class="data-item"><div class="data-label">Population (city)</div><div class="data-value">~14.2 million</div></div>
+    <div class="data-item"><div class="data-label">Area (23 wards)</div><div class="data-value">627 km&sup2;</div></div>
+    <div class="data-item"><div class="data-label">Density (23 wards)</div><div class="data-value">~15,700/km&sup2;</div></div>
+    <div class="data-item"><div class="data-label">Train stations</div><div class="data-value">882</div></div>
+    <div class="data-item"><div class="data-label">Michelin stars</div><div class="data-value">Most of any city globally</div></div>
+  </div>
+  <div class="highlights">
+    <div class="highlight-label">Design & museum musts</div>
+    <div class="highlight-list">
+      <span class="highlight-tag">21_21 DESIGN SIGHT (Ando + Miyake)</span>
+      <span class="highlight-tag">Mori Art Museum (open til 10pm)</span>
+      <span class="highlight-tag">teamLab Borderless</span>
+      <span class="highlight-tag">Nezu Museum (Kengo Kuma)</span>
+      <span class="highlight-tag">National Art Center (Kurokawa)</span>
+    </div>
+  </div>
+  <div class="highlights" style="margin-top:8px">
+    <div class="highlight-label">Neighbourhood wandering</div>
+    <div class="highlight-list">
+      <span class="highlight-tag">Shimokitazawa (vintage, vinyl, cafes)</span>
+      <span class="highlight-tag">Yanaka (old Tokyo, temple cats)</span>
+      <span class="highlight-tag">Daikanyama (T-Site bookshop, design)</span>
+      <span class="highlight-tag">Koenji (thrift, live music)</span>
+      <span class="highlight-tag">Asakusa (Senso-ji, traditional)</span>
+    </div>
+  </div>
+  <div class="trivia">Tokyo has the most Michelin-starred restaurants of any city in the world &mdash; more than Paris and Kyoto combined. In 1721, Edo (pre-Tokyo) had over 1 million residents, making it one of the largest cities on the planet at the time, before London or Paris reached that number.</div>
+  <button class="wiki-btn" data-wiki="Tokyo"><div class="wiki-btn-icon">W</div><div class="wiki-btn-body"><div class="wiki-btn-label">Wikipedia</div><div class="wiki-btn-title">Tokyo</div></div><div class="wiki-btn-arrow">›</div></button>
+  <div class="stay-links">
+    <a class="stay-link" href="https://www.gotokyo.org/en/" target="_blank">GO TOKYO Official</a>
+    <a class="stay-link" href="https://www.2121designsight.jp/en/" target="_blank">21_21 DESIGN SIGHT</a>
+    <a class="stay-link" href="https://www.teamlab.art/e/tokyo/" target="_blank">teamLab Borderless</a>
+    <a class="stay-link" href="https://shimokitazawa.or.jp/" target="_blank">Shimokitazawa</a>
+    <a class="stay-link" href="https://yanesen.net/" target="_blank">Yanaka &amp; Old Tokyo</a>
+    <a class="stay-link" href="https://www.tnm.jp/" target="_blank">Tokyo National Museum</a>
+  </div>
+  <div class="lodging">
+    <div>
+      <div class="lodging-label">&#x1f3e0; Where we're staying</div>
+      <div class="lodging-name">Shimokitazawa Studio</div>
+      <div class="lodging-meta">Setagaya-ku &middot; 2 min from Shimokitazawa Station &middot; &#11088; 4.83 (103 reviews)</div>
+      <div class="lodging-desc">A 30 m&sup2; fifth-floor studio with two double beds and a balcony, two minutes from one of Tokyo&rsquo;s best neighbourhoods for vintage shops, live music venues, and independent cafes. Washer, full kitchen, high-speed wifi included.</div>
+    </div>
+    <a class="lodging-link" href="https://www.airbnb.ca/rooms/795278732965706223" target="_blank">View on Airbnb &rarr;</a>
+  </div>
+  </div>
+</div>
+
+<div class="relocation">
+  <div class="relocation-icon train">&#x1f685;</div>
+  <div class="relocation-body">
+    <div class="relocation-title train">Shinkansen to Osaka</div>
+    <div class="relocation-route">Tokyo &rarr; Shin-Osaka</div>
+    <div class="relocation-details">
+      <span class="detail-chip train">~2 hr 30 min</span>
+      <span class="detail-chip train">Direct</span>
+      <span class="detail-chip train">~&yen;13,870/person</span>
+    </div>
+  </div>
+</div>
+
+<!-- 10. OSAKA (RETURN) -->
+<div class="stay" id="stop-10">
+  <div class="stay-header">
+    <div><div class="stay-number">10</div><div class="stay-name">Osaka</div></div>
+    <div class="stay-dates">May 13&ndash;14<br><span class="stay-nights">1 NIGHT</span></div>
+  </div>
+  <div class="stay-body">
+  <div class="stay-trip-day">Trip day 26 &middot; Final night</div>
+  <div class="stay-vibe">Full circle. One last night where it all started. One final Dotonbori crawl. Pack up the bikes, pack up the memories.</div>
+  <div class="highlights">
+    <div class="highlight-label">Last night agenda</div>
+    <div class="highlight-list">
+      <span class="highlight-tag">Final takoyaki</span>
+      <span class="highlight-tag">Dotonbori walk</span>
+      <span class="highlight-tag">Pack bikes for flight</span>
+    </div>
+  </div>
+  </div>
+</div>
+
+<div class="relocation">
+  <div class="relocation-icon flight">&#x2708;&#xFE0F;</div>
+  <div class="relocation-body">
+    <div class="relocation-title flight">Fly home from KIX</div>
+    <div class="relocation-route">Osaka &rarr; Kansai International Airport &rarr; Vancouver</div>
+    <div class="relocation-details">
+      <span class="detail-chip flight">Nankai Rapi:t ~40 min from Namba</span>
+      <span class="detail-chip flight">or JR Haruka ~50 min</span>
+    </div>
+  </div>
+</div>
+
+<!-- MAP -->
+<div class="map-section" id="trip-map-section">
+  <div id="trip-map"></div>
+  <div class="map-overlay-title">
+    <div class="mot-heading">Route overview</div>
+    <div class="mot-sub">Hover stops for details</div>
+  </div>
+  <div class="map-overlay-legend">
+    <div class="map-legend-row"><div class="map-legend-line bike"></div>Cycling</div>
+    <div class="map-legend-row"><div class="map-legend-line train"></div>Train</div>
+  </div>
+  <button id="map-layer-toggle">Show lodgings</button>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat-box"><div class="stat-number" style="color:var(--accent-bike);">275</div><div class="stat-label">km cycled</div></div>
+  <div class="stat-box"><div class="stat-number" style="color:var(--accent-train);">3</div><div class="stat-label">Train relocations</div></div>
+  <div class="stat-box"><div class="stat-number" style="color:var(--accent-flight);">26</div><div class="stat-label">Nights total</div></div>
+</div>
+
+<!-- SUMMARY -->
+<div class="summary" id="at-a-glance">
+  <div class="summary-title">At a glance</div>
+  <table class="summary-table">
+    <thead><tr><th>Stop</th><th>Nights</th><th>Next move</th><th>Mode</th><th>Time</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Osaka</strong></td><td>3</td><td>&rarr; Kyoto</td><td><span class="mode-badge bike">Bike</span></td><td>~50 km / 3&ndash;4h</td></tr>
+      <tr><td><strong>Kyoto</strong></td><td>4</td><td>&rarr; Onomichi</td><td><span class="mode-badge train">Train</span></td><td>1h 45m</td></tr>
+      <tr><td><strong>Onomichi</strong></td><td>3</td><td>&rarr; Ikuchijima</td><td><span class="mode-badge bike">Bike</span></td><td>~33 km / 3&ndash;4h</td></tr>
+      <tr><td><strong>Ikuchijima</strong></td><td>2</td><td>&rarr; Imabari</td><td><span class="mode-badge bike">Bike</span></td><td>~42 km / 4&ndash;5h</td></tr>
+      <tr><td><strong>Imabari</strong></td><td>2</td><td>&rarr; Uchiko</td><td><span class="mode-badge bike">Bike</span></td><td>~80 km / full day</td></tr>
+      <tr><td><strong>Uchiko</strong></td><td>2</td><td>&rarr; Ozu</td><td><span class="mode-badge bike">Bike</span></td><td>~12 km / 45m</td></tr>
+      <tr><td><strong>Ozu</strong></td><td>2</td><td>&rarr; Matsuyama</td><td><span class="mode-badge bike">Bike</span></td><td>~55&ndash;60 km / 4&ndash;5h</td></tr>
+      <tr><td><strong>Matsuyama</strong></td><td>2</td><td>&rarr; Tokyo</td><td><span class="mode-badge train">Train</span></td><td>6h 30m</td></tr>
+      <tr><td><strong>Tokyo</strong></td><td>5</td><td>&rarr; Osaka</td><td><span class="mode-badge train">Train</span></td><td>2h 30m</td></tr>
+      <tr><td><strong>Osaka</strong></td><td>1</td><td>&rarr; KIX</td><td><span class="mode-badge flight">Fly</span></td><td>~40m</td></tr>
+    </tbody>
+  </table>
+</div>
+
+
+<script>
+(function () {
+  // Wrapped in IIFE to keep all variables out of global scope
+
+  const tripMap = L.map('trip-map', { zoomControl: true, attributionControl: true });
+
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+    subdomains: 'abcd',
+    maxZoom: 19
+  }).addTo(tripMap);
+
+  // ── Stop data ────────────────────────────────────────────
+  // Stops 1 & 10 are both Osaka — combined into a single start/end marker
+  const tripStops = [
+    {
+      id: 1, name: "Osaka",
+      coords: [34.694, 135.502],
+      dates: "Apr 18–21 · May 13–14",
+      nights: "3 + 1 nights",
+      desc: "Japan's street-food capital — departure point and full-circle return",
+      arrival: "start",
+      modeLabel: "Start / End"
+    },
+    {
+      id: 2, name: "Kyoto",
+      coords: [35.012, 135.768],
+      dates: "Apr 21–25",
+      nights: "4 nights",
+      desc: "A thousand years of imperial history, temples, bamboo, and tea",
+      arrival: "bike",
+      modeLabel: "🚲 50 km from Osaka"
+    },
+    {
+      id: 3, name: "Onomichi",
+      coords: [34.409, 133.205],
+      dates: "Apr 25–28",
+      nights: "3 nights",
+      desc: "A hillside port of cats, steep alleys, and Seto Inland Sea views",
+      arrival: "train",
+      modeLabel: "🚆 Train from Kyoto"
+    },
+    {
+      id: 4, name: "Ikuchijima",
+      coords: [34.304, 133.098],
+      dates: "Apr 28–30",
+      nights: "2 nights",
+      desc: "Japan's Lemon Island — sun-drenched, unhurried, and smelling of citrus",
+      arrival: "bike",
+      modeLabel: "🚲 Shimanami Kaido Day 1 · 33 km"
+    },
+    {
+      id: 5, name: "Imabari",
+      coords: [34.066, 132.998],
+      dates: "Apr 30–May 2",
+      nights: "2 nights",
+      desc: "Southern gateway of the Shimanami Kaido and Japan's towel capital",
+      arrival: "bike",
+      modeLabel: "🚲 Shimanami Kaido Day 2 · 42 km"
+    },
+    {
+      id: 6, name: "Uchiko",
+      coords: [33.544, 132.637],
+      dates: "May 2–4",
+      nights: "2 nights",
+      desc: "A perfectly preserved Edo-era merchant town deep in the Ehime hills",
+      arrival: "bike",
+      modeLabel: "🚲 ~80 km inland from Imabari"
+    },
+    {
+      id: 7, name: "Ozu",
+      coords: [33.506, 132.545],
+      dates: "May 4–6",
+      nights: "2 nights",
+      desc: "'Little Kyoto of Iyo' — a quiet castle town on the Hijikawa River",
+      arrival: "bike",
+      modeLabel: "🚲 12 km from Uchiko"
+    },
+    {
+      id: 8, name: "Matsuyama",
+      coords: [33.839, 132.766],
+      dates: "May 6–8",
+      nights: "2 nights",
+      desc: "Dogo Onsen, Japan's oldest hot spring, and an original hilltop castle",
+      arrival: "bike",
+      modeLabel: "🚲 ~58 km from Ozu"
+    },
+    {
+      id: 9, name: "Tokyo",
+      coords: [35.682, 139.769],
+      dates: "May 8–13",
+      nights: "5 nights",
+      desc: "The world's largest city — design, culture, food, and endless neighbourhoods",
+      arrival: "train",
+      modeLabel: "🚆 Train from Matsuyama"
+    }
+  ];
+
+  // ── Route segments ───────────────────────────────────────
+  // Train routes follow approximate real rail corridors via waypoints
+  const tripRoutes = [
+    // Osaka → Kyoto (bike, Yodogawa River path)
+    { mode: "bike", path: [[34.694,135.502],[34.800,135.580],[35.012,135.768]] },
+    // Kyoto → Onomichi (train, Sanyo Shinkansen)
+    { mode: "train", path: [
+      [35.012,135.768],
+      [34.733,135.500], // Shin-Osaka
+      [34.690,135.195], // Kobe
+      [34.830,134.690], // Himeji
+      [34.810,134.340],
+      [34.490,133.365], // Fukuyama
+      [34.409,133.205]  // Onomichi
+    ]},
+    // Onomichi → Ikuchijima (bike, Shimanami Kaido Day 1)
+    { mode: "bike", path: [
+      [34.409,133.205],
+      [34.395,133.190], // Mukaishima (ferry)
+      [34.349,133.164], // Innoshima
+      [34.304,133.098]
+    ]},
+    // Ikuchijima → Imabari (bike, Shimanami Kaido Day 2)
+    { mode: "bike", path: [
+      [34.304,133.098],
+      [34.255,133.003], // Omishima
+      [34.162,132.977], // Hakatajima
+      [34.107,132.997], // Oshima
+      [34.066,132.998]
+    ]},
+    // Imabari → Uchiko (bike, hilly inland ~80 km)
+    { mode: "bike", path: [
+      [34.066,132.998],
+      [33.920,132.920],
+      [33.780,132.810],
+      [33.660,132.720],
+      [33.544,132.637]
+    ]},
+    // Uchiko → Ozu (bike, riverside ~12 km)
+    { mode: "bike", path: [[33.544,132.637],[33.506,132.545]] },
+    // Ozu → Matsuyama (bike, Hijikawa valley ~58 km)
+    { mode: "bike", path: [
+      [33.506,132.545],
+      [33.590,132.590],
+      [33.690,132.660],
+      [33.780,132.730],
+      [33.839,132.766]
+    ]},
+    // Matsuyama → Tokyo (train, via Okayama then Tokaido Shinkansen)
+    { mode: "train", path: [
+      [33.839,132.766],
+      [34.100,133.100],
+      [34.655,133.919], // Okayama
+      [34.830,134.690], // Himeji
+      [34.733,135.500], // Shin-Osaka
+      [35.012,135.768], // Kyoto
+      [35.170,136.882], // Nagoya
+      [35.290,138.380], // Shizuoka
+      [35.466,139.623], // Shin-Yokohama
+      [35.682,139.769]
+    ]},
+    // Tokyo → Osaka (train, Tokaido Shinkansen)
+    { mode: "train", path: [
+      [35.682,139.769],
+      [35.466,139.623],
+      [35.290,138.380],
+      [35.170,136.882],
+      [35.012,135.768],
+      [34.694,135.502]
+    ]}
+  ];
+
+  // ── Draw route lines ─────────────────────────────────────
+  const bikeStyle  = { color: '#2C7D8E', weight: 3, opacity: 0.85, lineJoin: 'round', lineCap: 'round' };
+  const trainStyle = { color: '#1C3252', weight: 3, opacity: 0.80, dashArray: '9 7', lineJoin: 'round', lineCap: 'round' };
+
+  tripRoutes.forEach(function (route) {
+    L.polyline(route.path, route.mode === 'bike' ? bikeStyle : trainStyle).addTo(tripMap);
+  });
+
+  // ── Place markers ────────────────────────────────────────
+  var stopsLayer = L.layerGroup().addTo(tripMap);
+
+  tripStops.forEach(function (stop) {
+    var icon = L.divIcon({
+      className: '',
+      html: '<div class="stop-pin ' + stop.arrival + '">' + String(stop.id).padStart(2, '0') + '</div>',
+      iconSize: [30, 30],
+      iconAnchor: [15, 15],
+      tooltipAnchor: [16, 0]
+    });
+
+    var tip = '<div class="tip-name">' + stop.name + '</div>' +
+      '<div class="tip-meta">' +
+        '<span class="tip-dates">' + stop.dates + '</span>' +
+        '<span class="tip-nights">' + stop.nights + '</span>' +
+      '</div>' +
+      '<div class="tip-desc">' + stop.desc + '</div>' +
+      '<div class="tip-mode ' + stop.arrival + '">' + stop.modeLabel + '</div>';
+
+    L.marker(stop.coords, { icon: icon, zIndexOffset: stop.id * 10 })
+      .addTo(stopsLayer)
+      .bindTooltip(tip, { className: 'stop-tip', direction: 'right', offset: [16, 0], opacity: 1 });
+  });
+
+  // ── Lodging markers ──────────────────────────────────────
+  var lodgingLayer = L.layerGroup(); // not added to map yet
+
+  var lodgings = [
+    { coords: [34.7119, 135.4966], name: "BIO_001 — The Design Studio Room",       location: "Kita Ward, Osaka",                   url: "https://www.airbnb.ca/rooms/26993227" },
+    { coords: [34.9712, 135.7761], name: "\"Hotei-an\" Machiya House",              location: "Higashiyama-ku, Kyoto",              url: "https://www.airbnb.ca/rooms/21374794" },
+    { coords: [34.4072, 133.2008], name: "Hidden Inn at the End of the Road",       location: "Hillside, Onomichi",                 url: "https://www.airbnb.ca/rooms/1011835570117402203" },
+    { coords: [34.2893, 133.0775], name: "Agrit Island Time",                       location: "Near Sunset Beach, Ikuchijima",      url: "https://www.airbnb.ca/rooms/1381484960398624350" },
+    { coords: [34.2522, 133.0049], name: "Auberge Yugashira",                       location: "Ōmishima island, Shimanami Kaido",   url: "https://www.airbnb.ca/rooms/49931059" },
+    { coords: [33.5440, 132.6372], name: "Sobadamari — National Cultural Property", location: "Uchiko-cho, Ehime",                  url: "https://www.airbnb.ca/rooms/732310672995310308" },
+    { coords: [33.5063, 132.5456], name: "Hotel Ota — Japanese Twin Room",          location: "Station-front, Ozu",                 url: "https://www.airbnb.ca/rooms/939459956988213154" },
+    { coords: [33.8370, 132.7640], name: "Inn in the Best Location in Matsuyama",   location: "Central Matsuyama",                  url: "https://www.airbnb.ca/rooms/12682829" },
+    { coords: [35.6617, 139.6684], name: "Shimokitazawa Studio",                    location: "Setagaya-ku, Tokyo",                 url: "https://www.airbnb.ca/rooms/795278732965706223" }
+  ];
+
+  lodgings.forEach(function (lodging) {
+    var icon = L.divIcon({
+      className: '',
+      html: '<div class="lodging-pin">🏠</div>',
+      iconSize: [22, 22],
+      iconAnchor: [11, 11],
+      tooltipAnchor: [12, 0]
+    });
+    var tip = '<div class="tip-name" style="font-size:15px">' + lodging.name + '</div>' +
+      '<div class="tip-desc" style="margin-top:4px;padding-top:0;border-top:none">' + lodging.location + '</div>';
+    L.marker(lodging.coords, { icon: icon, zIndexOffset: 500 })
+      .addTo(lodgingLayer)
+      .bindTooltip(tip, { className: 'stop-tip', direction: 'right', offset: [12, 0], opacity: 1 });
+  });
+
+  // ── Map layer toggle ──────────────────────────────────────
+  var showingLodgings = false;
+  var mapToggleBtn = document.getElementById('map-layer-toggle');
+  mapToggleBtn.addEventListener('click', function () {
+    showingLodgings = !showingLodgings;
+    if (showingLodgings) {
+      tripMap.removeLayer(stopsLayer);
+      lodgingLayer.addTo(tripMap);
+      mapToggleBtn.textContent = 'Show destinations';
+    } else {
+      tripMap.removeLayer(lodgingLayer);
+      stopsLayer.addTo(tripMap);
+      mapToggleBtn.textContent = 'Show lodgings';
+    }
+  });
+
+  // ── Fit bounds ───────────────────────────────────────────
+  tripMap.fitBounds(L.latLngBounds(tripStops.map(function (s) { return s.coords; })).pad(0.12));
+
+  // ── Collapsible stay cards ────────────────────────────────
+  var cards = document.querySelectorAll('.stay');
+  var toggleBtn = document.getElementById('toggle-all-btn');
+
+  cards.forEach(function (card) {
+    card.querySelector('.stay-header').addEventListener('click', function () {
+      card.classList.toggle('collapsed');
+      updateToggleBtn();
+    });
+  });
+
+  function updateToggleBtn() {
+    var anyExpanded = Array.from(cards).some(function (c) { return !c.classList.contains('collapsed'); });
+    toggleBtn.textContent = anyExpanded ? 'Collapse all' : 'Expand all';
+  }
+
+  toggleBtn.addEventListener('click', function () {
+    var anyExpanded = Array.from(cards).some(function (c) { return !c.classList.contains('collapsed'); });
+    cards.forEach(function (card) {
+      card.classList.toggle('collapsed', anyExpanded);
+    });
+    updateToggleBtn();
+  });
+
+}());
+</script>
+
+<div id="lightbox">
+  <button id="lightbox-close" aria-label="Close">&times;</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<div id="wiki-overlay">
+  <div id="wiki-panel">
+    <div id="wiki-panel-head">
+      <div class="wiki-btn-icon">W</div>
+      <div id="wiki-panel-title">Wikipedia</div>
+      <button id="wiki-close" aria-label="Close">&times;</button>
+    </div>
+    <div id="wiki-body"><div class="wiki-loading">Loading…</div></div>
+  </div>
+</div>
+
+<script>
+// ── WIKIPEDIA OVERLAY ─────────────────────────────────────
+(function () {
+  var overlay = document.getElementById('wiki-overlay');
+  var panel   = document.getElementById('wiki-panel');
+  var titleEl = document.getElementById('wiki-panel-title');
+  var body    = document.getElementById('wiki-body');
+  var closeBtn = document.getElementById('wiki-close');
+
+  function escapeHtml(text) {
+    return String(text)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function renderLeadParagraphs(text) {
+    return String(text || '')
+      .split(/\n{2,}/)
+      .map(function (p) { return p.trim(); })
+      .filter(Boolean)
+      .map(function (p) { return '<p>' + escapeHtml(p) + '</p>'; })
+      .join('');
+  }
+
+  function openWiki(title, displayName) {
+    titleEl.textContent = displayName;
+    body.innerHTML = '<div class="wiki-loading">Loading…</div>';
+    overlay.classList.add('active');
+    document.body.style.overflow = 'hidden';
+
+    var summaryUrl = 'https://en.wikipedia.org/api/rest_v1/page/summary/' + encodeURIComponent(title);
+    var introUrl = 'https://en.wikipedia.org/w/api.php?action=query&prop=extracts&exintro=1&explaintext=1&redirects=1&formatversion=2&format=json&origin=*&titles=' + encodeURIComponent(title);
+
+    Promise.all([
+      fetch(summaryUrl).then(function(r) { return r.json(); }),
+      fetch(introUrl).then(function(r) { return r.json(); })
+    ])
+      .then(function(results) {
+        var summary = results[0] || {};
+        var introData = results[1] || {};
+        var page = introData.query && introData.query.pages && introData.query.pages[0] ? introData.query.pages[0] : {};
+        var introText = page.extract || summary.extract || '';
+        var articleUrl = summary.content_urls && summary.content_urls.desktop && summary.content_urls.desktop.page
+          ? summary.content_urls.desktop.page
+          : 'https://en.wikipedia.org/wiki/' + encodeURIComponent(title).replace(/%20/g, '_');
+        var thumb = summary.thumbnail
+          ? '<img class="wiki-thumb" src="' + summary.thumbnail.source + '" alt="">'
+          : '';
+        var leadHtml = renderLeadParagraphs(introText);
+
+        body.innerHTML =
+          thumb +
+          '<div class="wiki-meta">Wikipedia lead section</div>' +
+          '<div class="wiki-extract">' + leadHtml + '</div>' +
+          '<a class="wiki-source-link" href="' + articleUrl + '" target="_blank" rel="noopener noreferrer">Open full article on Wikipedia ↗</a>';
+      })
+      .catch(function() {
+        body.innerHTML = '<div class="wiki-loading">Could not load article.</div>';
+      });
+  }
+
+  document.querySelectorAll('.wiki-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var title = btn.getAttribute('data-wiki');
+      var display = btn.querySelector('.wiki-btn-title').textContent;
+      openWiki(title, display);
+    });
+  });
+
+  function close() {
+    overlay.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) close();
+  });
+  closeBtn.addEventListener('click', close);
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && overlay.classList.contains('active')) close();
+  });
+}());
+
+// ── LIGHTBOX ──────────────────────────────────────────────
+(function () {
+  var lb = document.getElementById('lightbox');
+  var lbImg = document.getElementById('lightbox-img');
+  var lbClose = document.getElementById('lightbox-close');
+
+  document.querySelectorAll('.stay-photos img').forEach(function (img) {
+    img.addEventListener('click', function (e) {
+      e.stopPropagation();
+      lbImg.src = img.src;
+      lbImg.alt = img.alt;
+      lb.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  function close() {
+    lb.classList.remove('active');
+    document.body.style.overflow = '';
+    lbImg.src = '';
+  }
+
+  lb.addEventListener('click', close);
+  lbClose.addEventListener('click', close);
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') close();
+  });
+}());
+</script>
+</body>
+</html>
