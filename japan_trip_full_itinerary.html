@@ -1337,6 +1337,152 @@ h1 {
   max-height: 0;
   opacity: 0;
 }
+
+/* ── FLOATING SECTION NAV ─────────────────────────────── */
+.section-nav {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 9990;
+  width: min(320px, calc(100vw - 24px));
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  pointer-events: none;
+}
+.section-nav-toggle,
+.section-nav-panel {
+  pointer-events: auto;
+}
+.section-nav-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(24,26,27,0.14);
+  background: rgba(251, 248, 242, 0.94);
+  color: var(--text);
+  box-shadow: 0 10px 30px rgba(24,26,27,0.12);
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.section-nav-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.15;
+}
+.section-nav-kicker {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.55px;
+  color: var(--text-light);
+}
+.section-nav-current {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  margin-top: 2px;
+}
+.section-nav-chevron {
+  font-size: 12px;
+  color: var(--text-light);
+  transition: transform 0.18s ease;
+}
+.section-nav.open .section-nav-chevron {
+  transform: rotate(180deg);
+}
+.section-nav-panel {
+  width: 100%;
+  display: none;
+  background: rgba(251, 248, 242, 0.97);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 16px 40px rgba(24,26,27,0.15);
+  overflow: hidden;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.section-nav.open .section-nav-panel {
+  display: block;
+}
+.section-nav-head {
+  padding: 12px 14px 10px;
+  border-bottom: 1px solid var(--divider);
+}
+.section-nav-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--text-light);
+}
+.section-nav-list {
+  display: grid;
+  gap: 0;
+  max-height: min(58vh, 420px);
+  overflow-y: auto;
+}
+.section-nav-item {
+  display: grid;
+  grid-template-columns: 32px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 11px 14px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--divider);
+  text-align: left;
+  cursor: pointer;
+  color: var(--text);
+}
+.section-nav-item:last-child {
+  border-bottom: none;
+}
+.section-nav-item:hover {
+  background: var(--surface-2);
+}
+.section-nav-item.active {
+  background: rgba(231, 220, 182, 0.36);
+}
+.section-nav-num {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--text-light);
+}
+.section-nav-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+}
+.section-nav-dates {
+  font-size: 10px;
+  color: var(--text-muted);
+}
+@media (max-width: 600px) {
+  .section-nav {
+    right: 12px;
+    left: 12px;
+    bottom: 12px;
+    width: auto;
+  }
+  .section-nav-toggle {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .section-nav-panel {
+    border-radius: 16px;
+  }
+  .section-nav-list {
+    max-height: min(46vh, 320px);
+  }
+}
 </style>
 </head>
 <body>
@@ -1360,6 +1506,22 @@ h1 {
     </div>
   </div>
 </div>
+
+<nav class="section-nav" id="section-nav" aria-label="Section navigation">
+  <button class="section-nav-toggle" id="section-nav-toggle" aria-expanded="false" aria-controls="section-nav-panel">
+    <span class="section-nav-meta">
+      <span class="section-nav-kicker">Now viewing</span>
+      <span class="section-nav-current" id="section-nav-current">Osaka</span>
+    </span>
+    <span class="section-nav-chevron">▾</span>
+  </button>
+  <div class="section-nav-panel" id="section-nav-panel">
+    <div class="section-nav-head">
+      <div class="section-nav-title">Jump to stop</div>
+    </div>
+    <div class="section-nav-list" id="section-nav-list"></div>
+  </div>
+</nav>
 
 <!-- TRIP OVERVIEW -->
 <div class="trip-overview">
@@ -2358,6 +2520,96 @@ h1 {
     });
     updateToggleBtn();
   });
+
+  // ── Floating section nav ────────────────────────────────
+  var sectionNav = document.getElementById('section-nav');
+  var sectionNavToggle = document.getElementById('section-nav-toggle');
+  var sectionNavCurrent = document.getElementById('section-nav-current');
+  var sectionNavList = document.getElementById('section-nav-list');
+
+  function closeSectionNav() {
+    sectionNav.classList.remove('open');
+    sectionNavToggle.setAttribute('aria-expanded', 'false');
+  }
+
+  function openSectionNav() {
+    sectionNav.classList.add('open');
+    sectionNavToggle.setAttribute('aria-expanded', 'true');
+  }
+
+  sectionNavToggle.addEventListener('click', function () {
+    if (sectionNav.classList.contains('open')) {
+      closeSectionNav();
+    } else {
+      openSectionNav();
+    }
+  });
+
+  var staySections = Array.from(document.querySelectorAll('.stay')).map(function (card) {
+    var id = card.id;
+    var number = (card.querySelector('.stay-number') || {}).textContent || '';
+    var name = (card.querySelector('.stay-name') || {}).textContent || id;
+    var dates = (card.querySelector('.stay-dates') || {}).childNodes[0];
+    return {
+      id: id,
+      el: card,
+      number: String(number).trim(),
+      name: String(name).trim(),
+      dates: dates ? String(dates.textContent || dates.nodeValue).trim() : ''
+    };
+  });
+
+  staySections.forEach(function (section) {
+    var item = document.createElement('button');
+    item.className = 'section-nav-item';
+    item.type = 'button';
+    item.setAttribute('data-target', section.id);
+    item.innerHTML =
+      '<span class="section-nav-num">' + section.number + '</span>' +
+      '<span class="section-nav-name">' + section.name + '</span>' +
+      '<span class="section-nav-dates">' + section.dates + '</span>';
+
+    item.addEventListener('click', function () {
+      closeSectionNav();
+      section.el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (history.replaceState) history.replaceState(null, '', '#' + section.id);
+    });
+
+    sectionNavList.appendChild(item);
+    section.navItem = item;
+  });
+
+  function setActiveSection(id) {
+    staySections.forEach(function (section) {
+      var active = section.id === id;
+      if (section.navItem) section.navItem.classList.toggle('active', active);
+      if (active) sectionNavCurrent.textContent = section.name;
+    });
+  }
+
+  function updateActiveSection() {
+    var viewportMid = window.innerHeight * 0.34;
+    var current = staySections[0];
+
+    staySections.forEach(function (section) {
+      var rect = section.el.getBoundingClientRect();
+      if (rect.top <= viewportMid) current = section;
+    });
+
+    if (current) setActiveSection(current.id);
+  }
+
+  document.addEventListener('click', function (e) {
+    if (!sectionNav.contains(e.target)) closeSectionNav();
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && sectionNav.classList.contains('open')) closeSectionNav();
+  });
+
+  window.addEventListener('scroll', updateActiveSection, { passive: true });
+  window.addEventListener('resize', updateActiveSection);
+  updateActiveSection();
 
   // ── In-card ride + coffee guides ─────────────────────────
   var stayGuides = {
