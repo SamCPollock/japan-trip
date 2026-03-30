@@ -73,15 +73,6 @@ body {
   gap: 28px;
   align-items: end;
 }
-.page-kicker {
-  display: inline-block;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.8px;
-  text-transform: uppercase;
-  color: var(--accent-flight);
-  margin-bottom: 14px;
-}
 h1 {
   font-family: 'Cormorant Garamond', serif;
   font-size: 74px;
@@ -268,12 +259,34 @@ h1 {
 }
 #lightbox img {
   max-width: min(92vw, 1000px);
-  max-height: 88vh;
+  max-height: calc(88vh - 88px);
   object-fit: contain;
   border-radius: 8px;
   box-shadow: 0 8px 48px rgba(0,0,0,0.6);
   cursor: zoom-out;
   animation: lb-img-in 0.2s ease;
+}
+#lightbox-figure {
+  max-width: min(92vw, 1000px);
+  width: 100%;
+}
+#lightbox-caption {
+  margin-top: 14px;
+  color: #f3eee4;
+  display: grid;
+  gap: 5px;
+}
+#lightbox-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(24px, 3vw, 32px);
+  line-height: 1;
+  letter-spacing: -0.45px;
+}
+#lightbox-context {
+  font-size: 13px;
+  line-height: 1.65;
+  color: rgba(243, 238, 228, 0.82);
+  max-width: 740px;
 }
 #lightbox-close {
   position: fixed;
@@ -503,14 +516,27 @@ h1 {
   border-radius: 10px;
   overflow: hidden;
 }
+.guide-item.guide-item-text {
+  background: var(--surface);
+  border-left: 3px solid var(--gold-border);
+}
 .guide-item img {
   width: 100%;
   height: 118px;
   object-fit: cover;
   display: block;
+  cursor: zoom-in;
 }
 .guide-item-body {
   padding: 11px 12px 12px;
+}
+.guide-item-kicker {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.55px;
+  text-transform: uppercase;
+  color: var(--text-light);
+  margin-bottom: 7px;
 }
 .guide-item-name {
   font-size: 14px;
@@ -1489,7 +1515,6 @@ h1 {
 
 <div class="page-header">
   <div class="page-header-main">
-    <div class="page-kicker">Japan Travel Issue</div>
     <h1>Japan &middot; April&ndash;May 2026</h1>
     <p class="subtitle">Sam & Jess &middot; 26 nights &middot; 10 stops &middot; Own bikes in rinko bags</p>
   </div>
@@ -1707,7 +1732,7 @@ h1 {
   <div class="stay-photos">
     <img src="https://upload.wikimedia.org/wikipedia/commons/7/75/Onomichi_Panorama.jpg" alt="Onomichi panorama" loading="lazy">
     <img src="https://upload.wikimedia.org/wikipedia/commons/7/76/Onomichi_city_center_area_Aerial_photograph.2010.jpg" alt="Onomichi harbour aerial" loading="lazy">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/6/69/Higashigoshocho%2C_Onomichi%2C_Hiroshima_Prefecture_722-0036%2C_Japan_-_panoramio.jpg" alt="Onomichi street" loading="lazy">
+    <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Narrow%20Path%20of%20Cats%20in%20Onomichi%2C%20Hiroshima%201.jpg" alt="Onomichi Cat Alley" loading="lazy">
   </div>
   <div class="data-grid">
     <div class="data-item"><div class="data-label">Population</div><div class="data-value">~129,000</div></div>
@@ -1773,7 +1798,7 @@ h1 {
   <div class="stay-vibe">Japan's "Lemon Island" &mdash; a sun-drenched Seto Inland Sea island that produces more lemons than anywhere else in the country. The air smells like citrus, the light has a Mediterranean quality, and the pace is gloriously slow. The main town of Setoda has an old-fashioned shopping street (shotengai) that's come back to life with specialty coffee, gelato shops, and a ryokan by the founder of Aman resorts.</div>
   <div class="stay-photos">
     <img src="https://upload.wikimedia.org/wikipedia/commons/c/cc/TataraOhashi.jpg" alt="Tatara Bridge, Shimanami Kaido" loading="lazy">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/5/5a/Ikutizima01.jpg" alt="Ikuchijima island" loading="lazy">
+    <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Setoda%20%2814069377376%29.jpg" alt="Setoda, Ikuchijima" loading="lazy">
     <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Shimanami_Kaido_5.jpg" alt="Shimanami Kaido cycling" loading="lazy">
   </div>
   <div class="data-grid">
@@ -1841,7 +1866,7 @@ h1 {
   <div class="stay-photos">
     <img src="https://upload.wikimedia.org/wikipedia/commons/a/a1/%E5%A4%9A%E3%80%85%E7%BE%85%E5%A4%A7%E6%A9%8B_-_panoramio.jpg" alt="Kurushima Kaikyo Bridge" loading="lazy">
     <img src="https://upload.wikimedia.org/wikipedia/commons/1/15/Imabari_Castle_01.JPG" alt="Imabari Castle" loading="lazy">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/5/56/Imabari_Castle_at_night.JPG" alt="Imabari Castle at night" loading="lazy">
+    <img src="https://commons.wikimedia.org/wiki/Special:FilePath/%E4%BB%8A%E6%B2%BB%E6%AF%9B%E5%B7%BE%E7%BE%8E%E8%A1%93%E9%A4%A8_Imabari_Towel_Museum_Ichihiro_-_panoramio.jpg" alt="Imabari Towel Museum" loading="lazy">
   </div>
   <div class="data-grid">
     <div class="data-item"><div class="data-label">Population</div><div class="data-value">~152,000</div></div>
@@ -2105,7 +2130,7 @@ h1 {
   <div class="stay-vibe">The biggest possible gear-shift: from cycling through Shikoku rice paddies to the largest metropolitan area on earth. Every neighbourhood is its own world &mdash; Shimokitazawa for vintage shops, Yanaka for old-Tokyo temple streets, Daikanyama for design bookshops, Roppongi for museums. For a design-minded person, this is the motherlode: Tadao Ando buildings, Issey Miyake's museum, teamLab's immersive worlds, and more independent galleries than you could visit in a month.</div>
   <div class="stay-photos">
     <img src="https://upload.wikimedia.org/wikipedia/commons/5/59/Shimokitazawa_Street_2015.jpg" alt="Shimokitazawa street" loading="lazy">
-    <img src="https://upload.wikimedia.org/wikipedia/commons/7/71/Cityscape_in_Shinjuku_2021-07-18_01.jpg" alt="Shinjuku cityscape" loading="lazy">
+    <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Loud_cars_near_Shibuya_Scramble_crossing.jpg" alt="Shibuya Scramble Crossing" loading="lazy">
     <img src="https://upload.wikimedia.org/wikipedia/commons/9/9d/Shinjuku_Gyoen_National_Garden_-_sakura_3.JPG" alt="Shinjuku Gyoen" loading="lazy">
   </div>
   <div class="data-grid">
@@ -2619,13 +2644,13 @@ h1 {
           name: "Yodo River Greenway to Kyoto",
           meta: "50 km · flat · best as a half-day transfer ride",
           desc: "The cleanest ride out of Osaka: riverbanks, long sightlines, minimal navigation stress, and an easy roll into Kyoto.",
-          img: "https://upload.wikimedia.org/wikipedia/commons/3/36/Dotonbori_at_night.JPG"
+          img: "https://commons.wikimedia.org/wiki/Special:FilePath/Yodo%20River%20Osaka%20%28227003099%29.jpeg"
         },
         {
           name: "Nakanoshima + Utsubo Park city spin",
           meta: "12–18 km · urban loop · sunrise or golden hour",
           desc: "A gentle architectural spin through Osaka’s most livable central districts, good for shaking out the legs without committing to a full day.",
-          img: "https://upload.wikimedia.org/wikipedia/commons/e/e4/Osaka_Castle_02bs3200.jpg"
+          img: "https://commons.wikimedia.org/wiki/Special:FilePath/Nakanoshima%20Museum%20of%20Art%20Osaka.jpg"
         }
       ],
       coffee: [
@@ -2633,13 +2658,13 @@ h1 {
           name: "LiLo Coffee Roasters",
           meta: "Amerikamura · strong bean selection",
           desc: "A reliable specialty stop when you want a serious pour-over or espresso in the middle of Namba-side wandering.",
-          img: "https://upload.wikimedia.org/wikipedia/commons/4/42/%E9%BB%92%E9%96%80%E5%B8%82%E5%A0%B4_2024%281%29.jpg"
+          img: "https://ak-d.tripcdn.com/images/0103o12000c2dpnn5D94A_D_900_506_R5.jpg?proc=autoorient"
         },
         {
           name: "Takamura Wine & Coffee Roasters",
           meta: "Nishi-ku · destination-level coffee room",
           desc: "Worth the detour for a longer coffee break, especially if you want a roastery atmosphere rather than just a quick city cup.",
-          img: "https://upload.wikimedia.org/wikipedia/commons/e/e4/Osaka_Castle_02bs3200.jpg"
+          img: "https://takamuranet.com/image/img10.jpg"
         }
       ]
     },
@@ -2649,7 +2674,7 @@ h1 {
           name: "Kamo River to Demachiyanagi spin",
           meta: "15–20 km · flat city ride",
           desc: "A classic Kyoto leg-stretcher: easy riverside mileage, university neighborhoods, and lots of clean ways to loop back.",
-          img: "https://upload.wikimedia.org/wikipedia/commons/2/26/Gion_Alley_at_Night.jpg"
+          img: "https://commons.wikimedia.org/wiki/Special:FilePath/Kamo%20River%20%40%20Kyoto%20%2813406253023%29.jpg"
         },
         {
           name: "Arashiyama west-side loop",
@@ -2663,13 +2688,13 @@ h1 {
           name: "Kurasu Kyoto",
           meta: "near Kyoto Station · polished specialty staple",
           desc: "A dependable modern Kyoto coffee stop with clean espresso, careful filter coffee, and a design-forward feel.",
-          img: "https://upload.wikimedia.org/wikipedia/commons/9/9a/Fushimi-Inari_Torii.jpg"
+          img: "https://ak-d.tripcdn.com/images/100g0k000000c22tv0C50_D_410_590_R5.jpg?proc=autoorient"
         },
         {
           name: "Weekenders Coffee",
           meta: "downtown Kyoto · alley roastery",
           desc: "A small-footprint favorite for when you want something distinctly local and a little quieter than the big sightseeing corridors.",
-          img: "https://upload.wikimedia.org/wikipedia/commons/2/26/Gion_Alley_at_Night.jpg"
+          img: "https://ak-d.tripcdn.com/images/01065120008cz7zfz7537_C_750_350_R5.jpg?proc=autoorient"
         }
       ]
     },
@@ -2693,13 +2718,13 @@ h1 {
           name: "ONOMICHI U2 coffee stop",
           meta: "waterfront · cyclist-friendly",
           desc: "The obvious stop before or after a ride: generous space, bike-aware energy, and a good place to watch the harbour.",
-          img: "https://upload.wikimedia.org/wikipedia/commons/6/69/Higashigoshocho%2C_Onomichi%2C_Hiroshima_Prefecture_722-0036%2C_Japan_-_panoramio.jpg"
+          img: "https://commons.wikimedia.org/wiki/Special:FilePath/Onomichi%20U2%202.jpg"
         },
         {
           name: "Yamaneko Mill area cafés",
           meta: "hillside old town · slower pace",
           desc: "Best for a more Onomichi-feeling coffee pause: small spaces, old-house atmosphere, and a little literary-town mood.",
-          img: "https://upload.wikimedia.org/wikipedia/commons/7/75/Onomichi_Panorama.jpg"
+          img: "https://pecomag.jp/wp-content/uploads/2022/11/large-45d871ecabcf54c9e53e3930dd483d7fdf5ee4617f821c62b82ed99f11a3328a.jpg"
         }
       ]
     },
@@ -2723,13 +2748,13 @@ h1 {
           name: "Shiomachi-tei café stop",
           meta: "Setoda old street · lemon-town atmosphere",
           desc: "A good slow stop after riding, especially if you want the Setoda shopping-street feel more than a pure specialty-coffee destination.",
-          img: "https://upload.wikimedia.org/wikipedia/commons/9/91/Shimanami_Kaido_5.jpg"
+          img: "https://visitshimanami.com/wp-content/uploads/Shiomachitei-interior-1400x900.jpg"
         },
         {
           name: "SOIL Setoda coffee break",
           meta: "design hotel side of town",
           desc: "Useful for a more contemporary stop with good coffee, nice light, and a slightly more polished post-ride mood.",
-          img: "https://upload.wikimedia.org/wikipedia/commons/5/5a/Ikutizima01.jpg"
+          img: "https://ak-d.tripcdn.com/images/0224w12000rj4cet1EE97_R_960_660_R5_D.jpg"
         }
       ]
     },
@@ -2753,7 +2778,7 @@ h1 {
           name: "Cyclo No Ie lounge stop",
           meta: "cyclist base · practical and social",
           desc: "A sensible first stop if you want route chatter, bike-company energy, and a coffee that fits the Shimanami ecosystem.",
-          img: "https://upload.wikimedia.org/wikipedia/commons/5/56/Imabari_Castle_at_night.JPG"
+          img: "https://ak-d.tripcdn.com/images/0584q12000mgbdxxtFED9_R_960_660_R5_D.jpg"
         },
         {
           name: "Towel museum café break",
@@ -2843,13 +2868,13 @@ h1 {
           name: "Ropeway-gai coffee stops",
           meta: "central Matsuyama · easy between sights",
           desc: "This is the best zone for a stylish mid-day coffee without overthinking it, especially around castle-town wandering.",
-          img: "https://upload.wikimedia.org/wikipedia/commons/e/ef/Matsuyama_Castle_Panorama_2.jpg"
+          img: "https://a1.cdn.japantravel.com/photo/6-16/800%21/ehime-marinecco-european-caf%C3%A9-bar-16.jpg"
         },
         {
           name: "Dogo side coffee break",
           meta: "after onsen wandering",
           desc: "A good choice if you want a slower, more neighborhood-feeling coffee after the bustle around the bathhouse area.",
-          img: "https://upload.wikimedia.org/wikipedia/commons/8/83/D%C5%8Dgo_Onsen.jpg"
+          img: "https://a2.cdn.japantravel.com/photo/44-163/840x560%21/ehime-dogo-no-machiya-a-little-japanese-oasis-163.jpg"
         }
       ]
     },
@@ -2873,13 +2898,13 @@ h1 {
           name: "Fuglen Tokyo",
           meta: "Shibuya side · design-classic café",
           desc: "Still a very good pick for a stylish but unfussy coffee stop, especially if you want something with real neighborhood energy.",
-          img: "https://upload.wikimedia.org/wikipedia/commons/5/59/Shimokitazawa_Street_2015.jpg"
+          img: "https://ak-d.tripcdn.com/images/100m0k000000cb16lCCBB_D_410_590_R5.jpg?proc=autoorient"
         },
         {
           name: "ONIBUS Coffee",
           meta: "east-leaning third-wave favorite",
           desc: "Best when the goal is simply very solid coffee in a compact, local-feeling setting rather than a giant flagship experience.",
-          img: "https://upload.wikimedia.org/wikipedia/commons/7/71/Cityscape_in_Shinjuku_2021-07-18_01.jpg"
+          img: "https://ak-d.tripcdn.com/images/10020u000000j353p8597_D_410_590_R5.jpg?proc=autoorient"
         }
       ]
     },
@@ -2903,15 +2928,189 @@ h1 {
           name: "Brooklyn Roasting Company Osaka",
           meta: "central, dependable final cup",
           desc: "A good departure-day choice if you want something easy, familiar, and close to the city rather than a destination detour.",
-          img: "https://upload.wikimedia.org/wikipedia/commons/4/42/%E9%BB%92%E9%96%80%E5%B8%82%E5%A0%B4_2024%281%29.jpg"
+          img: "https://ak-d.tripcdn.com/images/10050k000000c3bkaE822_D_410_590_R5.jpg?proc=autoorient"
         },
         {
           name: "LiLo Coffee Kissa",
           meta: "Namba side · small, focused stop",
           desc: "Useful for one last excellent cup before trains and airport logistics take over the day.",
-          img: "https://upload.wikimedia.org/wikipedia/commons/3/36/Dotonbori_at_night.JPG"
+          img: "https://ak-d.tripcdn.com/images/0103o12000c2dpnn5D94A_D_900_506_R5.jpg?proc=autoorient"
         }
       ]
+    }
+  };
+
+  var guideVisuals = {
+    "Yodo River Greenway to Kyoto": {
+      photoTitle: "Yodo River",
+      wiki: "Yodo River",
+      context: "The broad Yodo-gawa river corridor, which gives you the cleanest low-stress cycling line out of Osaka toward Kyoto."
+    },
+    "Nakanoshima + Utsubo Park city spin": {
+      photoTitle: "Nakanoshima",
+      wiki: "Nakanoshima",
+      context: "Osaka’s central island district around the river promenades, museums, and office-era stone architecture that make this city spin feel unusually composed."
+    },
+    "LiLo Coffee Roasters": {
+      photoTitle: "Amerikamura",
+      wiki: "Amerikamura",
+      context: "Amerikamura, the youthful Namba-side neighborhood around LiLo Coffee Roasters, where the stop feels more about street energy than a formal café pilgrimage."
+    },
+    "Takamura Wine & Coffee Roasters": {
+      photoTitle: "Nishi-ku, Osaka",
+      wiki: "Nishi-ku, Osaka",
+      context: "The calmer warehouse-and-river edge of Nishi-ku, the part of Osaka that suits a longer Takamura detour."
+    },
+    "Kamo River to Demachiyanagi spin": {
+      photoTitle: "Kamo River",
+      wiki: "Kamo River",
+      context: "Kyoto’s Kamo River embankment, the city’s most intuitive and least stressful urban ride axis."
+    },
+    "Arashiyama west-side loop": {
+      wiki: "Arashiyama",
+      context: "The western Kyoto district around Arashiyama, where river views and mountain edges give the ride its scenic payoff."
+    },
+    "Kurasu Kyoto": {
+      wiki: "Kyoto Station",
+      context: "The Kyoto Station side of town, where Kurasu makes sense as a sharp, modern coffee stop against a more infrastructural part of the city."
+    },
+    "Weekenders Coffee": {
+      wiki: "Nakagyo-ku, Kyoto",
+      context: "Downtown Kyoto’s tight backstreets in Nakagyo, closer to the scale and mood that suit Weekenders."
+    },
+    "Mukaishima warm-up loop": {
+      wiki: "Mukaishima, Hiroshima",
+      context: "Mukaishima’s flatter shoreline roads, the obvious place to shake down the bike before committing to the full Shimanami crossing."
+    },
+    "Senko-ji hillside climb + harbour roll": {
+      wiki: "Senkō-ji",
+      context: "The hill above Onomichi harbour, where the temple-side climb gives you the layered sea-town view that defines the place."
+    },
+    "ONOMICHI U2 coffee stop": {
+      photoTitle: "Onomichi U2",
+      wiki: "Onomichi",
+      context: "Onomichi’s waterfront warehouse district, the right backdrop for a cyclist-oriented stop like U2."
+    },
+    "Yamaneko Mill area cafés": {
+      photoTitle: "Neko no Hosomichi",
+      wiki: "Onomichi",
+      context: "The old-house lanes climbing above the harbour, closer to the literary and quietly scruffy side of Onomichi than the flat waterfront is."
+    },
+    "Setoda + Tatara Bridge out-and-back": {
+      wiki: "Tatara Bridge",
+      context: "Tatara Bridge, one of the signature Shimanami spans and the visual high point of an easier ride out from Setoda."
+    },
+    "Lemon orchard interior roads": {
+      wiki: "Setoda, Hiroshima",
+      context: "Setoda’s inland citrus slopes on Ikuchijima, where the route starts to feel less like a through-line and more like an island ride."
+    },
+    "Shiomachi-tei café stop": {
+      photoTitle: "Setoda",
+      wiki: "Setoda, Hiroshima",
+      context: "The old shopping-street core of Setoda, whose slower pace matters as much as the coffee itself."
+    },
+    "SOIL Setoda coffee break": {
+      photoTitle: "Setoda",
+      wiki: "Setoda, Hiroshima",
+      context: "The design-forward side of Setoda’s revived center, where SOIL fits into the island’s newer hospitality scene."
+    },
+    "Sunrise Itoyama approach spin": {
+      wiki: "Kurushima Kaikyō Bridge",
+      context: "The huge Kurushima-Kaikyo crossing near the Shikoku end of the route, still the strongest visual anchor for an extra Imabari ride."
+    },
+    "Castle + port district loop": {
+      wiki: "Imabari",
+      context: "Imabari’s working port-city fabric, where castle moat views and harbor industry sit much closer together than in more polished tourist towns."
+    },
+    "Cyclo No Ie lounge stop": {
+      wiki: "Imabari",
+      context: "Central Imabari, where the cycling infrastructure and lodging scene make practical coffee stops feel part of the route culture."
+    },
+    "Towel museum café break": {
+      wiki: "Imabari",
+      context: "The Imabari side of the towel-making region, used here to stand in for the museum stop when the day leans more local-industry than landmark."
+    },
+    "Yokaichi old town + Oda River spin": {
+      wiki: "Uchiko, Ehime",
+      context: "Uchiko’s preserved merchant streets fading into quiet valley roads, which is the whole appeal of this lower-pressure spin."
+    },
+    "Uchiko to Ozu preview ride": {
+      wiki: "Uchiko, Ehime",
+      context: "The gentle basin around Uchiko before the route starts connecting with the river corridor toward Ozu."
+    },
+    "Yokaichi old-street cafés": {
+      wiki: "Uchiko, Ehime",
+      context: "The Yokaichi preservation district, where the coffee stop is really about timber façades, white plaster walls, and morning quiet."
+    },
+    "Roadside Oda River coffee stop": {
+      wiki: "Uchiko, Ehime",
+      context: "The more rural edge of Uchiko near the Oda River, where a simple local café can make more sense than a destination coffee bar."
+    },
+    "Hijikawa riverside loop": {
+      wiki: "Hiji River",
+      context: "The Hiji-gawa corridor that gives Ozu its calm, open river scenery and makes the riding feel almost meditative."
+    },
+    "Ozu to Nagahama coast option": {
+      wiki: "Nagahama, Ehime",
+      context: "The coastal side of Ozu’s longer extension, where the river-town mood gives way to a broader sea-facing ride."
+    },
+    "Old-town NIPPONIA café stops": {
+      wiki: "Ōzu, Ehime",
+      context: "Ozu’s restored center, where adaptive reuse projects and small-scale hospitality are part of the town’s current identity."
+    },
+    "Garyu Sanso riverside tea/coffee pause": {
+      wiki: "Garyū Sansō",
+      context: "Garyu Sanso’s riverside setting, where the architectural calm matters more than the drink itself."
+    },
+    "Dogo + castle + Ropeway street loop": {
+      wiki: "Matsuyama Castle",
+      context: "The castle hill and the streets below it, which form Matsuyama’s clearest and most satisfying core loop."
+    },
+    "Hojo coast out-and-back": {
+      wiki: "Hōjō, Ehime",
+      context: "The Hojo coast north of central Matsuyama, where the route opens into the sea-breeze riding that the city itself can’t offer."
+    },
+    "Ropeway-gai coffee stops": {
+      wiki: "Matsuyama",
+      context: "The central Matsuyama shopping and castle-approach zone, where the city’s most stylish easy coffee stops tend to cluster."
+    },
+    "Dogo side coffee break": {
+      photoTitle: "Dogo Onsen District",
+      wiki: "Dōgo Onsen",
+      context: "The bathhouse district around Dogo Onsen, where a coffee pause reads as part of the neighborhood rhythm after soaking or wandering."
+    },
+    "Imperial Palace dawn loop": {
+      wiki: "Tokyo Imperial Palace",
+      context: "The broad ring roads around the Imperial Palace, one of the few central Tokyo rides that feels clean, legible, and open."
+    },
+    "Tamagawa riverside mileage": {
+      wiki: "Tamagawa Cycling Road",
+      context: "The Tamagawa cycling corridor on Tokyo’s western edge, the city’s most dependable option for uninterrupted mileage."
+    },
+    "Fuglen Tokyo": {
+      wiki: "Shibuya",
+      context: "The Shibuya-side neighborhood fabric around Fuglen, where the stop feels connected to Tokyo’s design and café culture rather than just caffeine."
+    },
+    "ONIBUS Coffee": {
+      photoTitle: "Nakameguro",
+      wiki: "Nakameguro",
+      context: "Nakameguro’s lower-rise streets, a better match for ONIBUS than giant-station Tokyo imagery would be."
+    },
+    "Nakanoshima morning spin": {
+      wiki: "Nakanoshima",
+      context: "Nakanoshima’s river-edged office island, which is one of Osaka’s neatest and most departure-day-friendly places to pedal."
+    },
+    "Utsubo Park + river loop": {
+      wiki: "Utsubo Park",
+      context: "The greener west-central Osaka zone around Utsubo Park, a softer urban texture for a final easy ride."
+    },
+    "Brooklyn Roasting Company Osaka": {
+      wiki: "Nakanoshima",
+      context: "Osaka’s central riverfront district, close to the sort of broad, easy city coffee stop this final-day pick is meant to be."
+    },
+    "LiLo Coffee Kissa": {
+      wiki: "Amerikamura",
+      context: "Amerikamura again, this time as the neighborhood backdrop for one last compact Namba-side coffee stop."
     }
   };
 
@@ -2924,7 +3123,11 @@ h1 {
       .replace(/'/g, '&#39;');
   }
 
-  function renderGuideSection(title, items) {
+  function renderGuideSection(title, items, options) {
+    options = options || {};
+    var showImages = options.showImages !== false;
+    var itemClass = showImages ? 'guide-item' : 'guide-item guide-item-text';
+    var kicker = options.kicker || '';
     return '<details class="guide-section">' +
       '<summary class="guide-summary">' +
         '<span class="guide-summary-title">' + escapeHtml(title) + '</span>' +
@@ -2934,9 +3137,20 @@ h1 {
       '<div class="guide-content">' +
         '<div class="guide-grid">' +
           items.map(function (item) {
-            return '<div class="guide-item">' +
-              '<img src="' + escapeHtml(item.img) + '" alt="' + escapeHtml(item.name) + '" loading="lazy">' +
+            var visuals = guideVisuals[item.name] || {};
+            var photoTitle = item.photoTitle || visuals.photoTitle || item.name;
+            var photoContext = item.photoContext || visuals.context || item.desc;
+            var wikiAttr = visuals.wiki ? ' data-wiki-image="' + escapeHtml(visuals.wiki) + '"' : '';
+            var imageHtml = showImages
+              ? '<img class="lightboxable" src="' + escapeHtml(item.img) + '" alt="' + escapeHtml(item.name) + '" loading="lazy"' +
+                  wikiAttr +
+                  ' data-photo-title="' + escapeHtml(photoTitle) + '"' +
+                  ' data-photo-context="' + escapeHtml(photoContext) + '">'
+              : '';
+            return '<div class="' + itemClass + '">' +
+              imageHtml +
               '<div class="guide-item-body">' +
+                (kicker ? '<div class="guide-item-kicker">' + escapeHtml(kicker) + '</div>' : '') +
                 '<div class="guide-item-name">' + escapeHtml(item.name) + '</div>' +
                 '<div class="guide-item-meta">' + escapeHtml(item.meta) + '</div>' +
                 '<div class="guide-item-desc">' + escapeHtml(item.desc) + '</div>' +
@@ -2956,10 +3170,37 @@ h1 {
     var wrap = document.createElement('div');
     wrap.className = 'guide-stack';
     wrap.innerHTML =
-      renderGuideSection('Good cycle rides', data.rides) +
-      renderGuideSection('Good coffee spots', data.coffee);
+      renderGuideSection('Good cycle rides', data.rides, { showImages: true }) +
+      renderGuideSection('Good coffee spots', data.coffee, { showImages: true });
 
     wikiBtn.parentNode.insertBefore(wrap, wikiBtn);
+  });
+
+  var wikiThumbCache = {};
+
+  function getWikiThumb(title) {
+    if (!title) return Promise.resolve('');
+    if (!wikiThumbCache[title]) {
+      var url = 'https://en.wikipedia.org/api/rest_v1/page/summary/' + encodeURIComponent(title);
+      wikiThumbCache[title] = fetch(url)
+        .then(function (r) {
+          return r.ok ? r.json() : {};
+        })
+        .then(function (data) {
+          return data && data.thumbnail && data.thumbnail.source ? data.thumbnail.source : '';
+        })
+        .catch(function () {
+          return '';
+        });
+    }
+    return wikiThumbCache[title];
+  }
+
+  document.querySelectorAll('.guide-item img[data-wiki-image]').forEach(function (img) {
+    var title = img.getAttribute('data-wiki-image');
+    getWikiThumb(title).then(function (src) {
+      if (src) img.src = src;
+    });
   });
 
 }());
@@ -2967,7 +3208,13 @@ h1 {
 
 <div id="lightbox">
   <button id="lightbox-close" aria-label="Close">&times;</button>
-  <img id="lightbox-img" src="" alt="">
+  <div id="lightbox-figure">
+    <img id="lightbox-img" src="" alt="">
+    <div id="lightbox-caption">
+      <div id="lightbox-title"></div>
+      <div id="lightbox-context"></div>
+    </div>
+  </div>
 </div>
 
 <div id="wiki-overlay">
@@ -3218,12 +3465,137 @@ h1 {
   var lb = document.getElementById('lightbox');
   var lbImg = document.getElementById('lightbox-img');
   var lbClose = document.getElementById('lightbox-close');
+  var lbTitle = document.getElementById('lightbox-title');
+  var lbContext = document.getElementById('lightbox-context');
+  var photoMetaByAlt = {
+    "Dotonbori at night": {
+      title: "Dotonbori at Night",
+      context: "Osaka’s canal-side entertainment strip in Namba, where the city’s food-first, loud-at-night identity is most legible."
+    },
+    "Osaka Castle": {
+      title: "Osaka Castle",
+      context: "The landmark keep and grounds in central Osaka, still one of the city’s quickest visual anchors even if the castle is more reconstructed symbol than untouched relic."
+    },
+    "Kuromon Market": {
+      title: "Kuromon Market",
+      context: "Osaka’s dense covered market, emblematic of the city’s everyday food culture and snack-driven wandering."
+    },
+    "Fushimi Inari torii gates": {
+      title: "Fushimi Inari Taisha",
+      context: "The vermilion torii tunnels at Kyoto’s Fushimi Inari shrine, one of the city’s most recognizable images."
+    },
+    "Gion alley at night": {
+      title: "Gion at Dusk",
+      context: "A narrow Gion lane in Kyoto, showing the lantern-lit old-city atmosphere that makes the district feel cinematic after dark."
+    },
+    "Arashiyama bamboo grove": {
+      title: "Arashiyama Bamboo Grove",
+      context: "The western Kyoto bamboo grove in Arashiyama, a classic image of the city’s softer, greener side."
+    },
+    "Onomichi panorama": {
+      title: "Onomichi Panorama",
+      context: "The layered view over Onomichi’s hillside temples and harbour, the picture that best explains why the town feels so distinctive."
+    },
+    "Onomichi harbour aerial": {
+      title: "Onomichi Harbour",
+      context: "An aerial look at the port and channel that define Onomichi’s geography before the Shimanami route even begins."
+    },
+    "Onomichi street": {
+      title: "Onomichi Old Street",
+      context: "A narrow street climbing through the town, closer to Onomichi’s everyday texture than the bigger viewpoints are."
+    },
+    "Onomichi Cat Alley": {
+      title: "Neko no Hosomichi",
+      context: "Onomichi’s Cat Alley, the tiny hillside lane that captures the town’s eccentric, affectionate old-neighborhood character."
+    },
+    "Tatara Bridge, Shimanami Kaido": {
+      title: "Tatara Bridge",
+      context: "One of the headline bridges on the Shimanami Kaido, spanning the Seto Inland Sea near Ikuchijima."
+    },
+    "Ikuchijima island": {
+      title: "Ikuchijima",
+      context: "The citrus-growing island itself, whose softer inland roads and sea light make it feel markedly slower than the larger cities."
+    },
+    "Setoda, Ikuchijima": {
+      title: "Setoda",
+      context: "The small port town on Ikuchijima where citrus, slow shopping-street life, and Shimanami bike culture all meet."
+    },
+    "Shimanami Kaido cycling": {
+      title: "Shimanami Kaido",
+      context: "A riding view from the celebrated island-hopping cycling route between Honshu and Shikoku."
+    },
+    "Kurushima Kaikyo Bridge": {
+      title: "Kurushima Kaikyo Bridge",
+      context: "The huge bridge complex at the Imabari end of the Shimanami route, the strongest visual shorthand for arriving on Shikoku."
+    },
+    "Imabari Castle": {
+      title: "Imabari Castle",
+      context: "Imabari’s sea-moat castle, the city’s clearest landmark and an important counterpoint to its more industrial identity."
+    },
+    "Imabari Towel Museum": {
+      title: "Imabari Towel Museum",
+      context: "A museum tied to the textile industry that made Imabari nationally famous, included to balance the castle-heavy imagery the page had before."
+    },
+    "Yokaichi old townscape": {
+      title: "Yokaichi Old Town",
+      context: "Uchiko’s preserved merchant quarter, where white plaster, dark wood, and stone paving still hold together convincingly."
+    },
+    "Uchiko-za theatre": {
+      title: "Uchiko-za Theatre",
+      context: "The historic kabuki theatre in Uchiko, still active and one of the town’s strongest architectural sites."
+    },
+    "Traditional merchant house": {
+      title: "Uchiko Merchant House",
+      context: "One of the preserved houses that explains how Uchiko’s wax-and-paper wealth was translated into architecture."
+    },
+    "Garyu Sanso garden": {
+      title: "Garyu Sanso Garden",
+      context: "The riverside villa garden in Ozu, where landscape composition is one of the town’s real strengths."
+    },
+    "Ozu Castle": {
+      title: "Ozu Castle",
+      context: "The reconstructed but carefully made castle that now anchors Ozu’s heritage-led revival."
+    },
+    "Garyu Sanso villa": {
+      title: "Garyu Sanso",
+      context: "The villa itself, perched above the Hiji River and central to Ozu’s appeal."
+    },
+    "Dogo Onsen": {
+      title: "Dogo Onsen Honkan",
+      context: "Matsuyama’s famous bathhouse, a defining image of the city and the historic core around it."
+    },
+    "Matsuyama Castle": {
+      title: "Matsuyama Castle",
+      context: "The original hilltop castle that gives Matsuyama much of its spatial drama."
+    },
+    "Matsuyama cityscape": {
+      title: "Matsuyama Cityscape",
+      context: "A wider look over Matsuyama from the castle side, showing how the city spreads out from the hill."
+    },
+    "Shimokitazawa street": {
+      title: "Shimokitazawa",
+      context: "One of Tokyo’s most walkable and café-rich low-rise neighborhoods, and a better emotional fit for your stay than a generic skyline."
+    },
+    "Shibuya Scramble Crossing": {
+      title: "Shibuya Scramble Crossing",
+      context: "Tokyo at its most instantly recognizable: dense, choreographed, and unmistakably metropolitan."
+    },
+    "Shinjuku Gyoen": {
+      title: "Shinjuku Gyoen",
+      context: "A calmer green counterpoint to the rest of Tokyo, included so the city doesn’t read as pure neon-and-concrete cliché."
+    }
+  };
 
-  document.querySelectorAll('.stay-photos img').forEach(function (img) {
+  document.querySelectorAll('.stay-photos img, .guide-item img').forEach(function (img) {
     img.addEventListener('click', function (e) {
       e.stopPropagation();
-      lbImg.src = img.src;
+      var meta = photoMetaByAlt[img.alt] || {};
+      var title = img.getAttribute('data-photo-title') || meta.title || img.alt;
+      var context = img.getAttribute('data-photo-context') || meta.context || '';
+      lbImg.src = img.currentSrc || img.src;
       lbImg.alt = img.alt;
+      lbTitle.textContent = title;
+      lbContext.textContent = context;
       lb.classList.add('active');
       document.body.style.overflow = 'hidden';
     });
@@ -3233,6 +3605,8 @@ h1 {
     lb.classList.remove('active');
     document.body.style.overflow = '';
     lbImg.src = '';
+    lbTitle.textContent = '';
+    lbContext.textContent = '';
   }
 
   lb.addEventListener('click', close);
